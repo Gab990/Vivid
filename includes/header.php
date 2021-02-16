@@ -46,13 +46,28 @@ if (isset($_SESSION['username'])) {
         </div>
         <nav>
             <a href="<?php echo $userLoggedIn;?>"><?php echo $user['first_name']; ?></a>
-            <a href="index.php"><i class="fa fa-home fa-lg"></i></a>
-            <a href="#"><i class="fa fa-envelope-o fa-lg"></i></a>
-            <a href="#"><i class="fa fa-bell-o fa-lg"></i></a>
-            <a href="requests.php"><i class="fa fa-users fa-lg"></i></a>
-            <a href="#"><i class="fa fa-cog fa-lg"></i></a>
-            <a href="includes/handlers/logout.php"><i class="fa fa-sign-out fa-lg"></i></a>
+            <a href="index.php">
+                <i class="fa fa-home fa-lg"></i>
+            </a>
+            <a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'message')">
+                <i class="fa fa-envelope-o fa-lg"></i>
+            </a>
+            <a href="#">
+                <i class="fa fa-bell-o fa-lg"></i>
+            </a>
+            <a href="requests.php">
+                <i class="fa fa-users fa-lg"></i>
+            </a>
+            <a href="#">
+                <i class="fa fa-cog fa-lg"></i>
+            </a>
+            <a href="includes/handlers/logout.php">
+                <i class="fa fa-sign-out fa-lg"></i>
+            </a>
         </nav>
+
+        <div class="dropdown_data_window"></div>
+        <input type="hidden" id="dropdown_data_type" value="">
 
     </div>
     <div class="wrapper">

@@ -27,7 +27,7 @@ $user_room_values = mysqli_fetch_array($user_room_query);
         <?php
 
         if ($username != $userLoggedIn) { ?>
-            <a-box position="-1 4.8 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
+            <a-box position="-1 5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
         <?php } ?>
         <a-entity text="value: <?php echo $user_room_values['first_name'] . " " . $user_room_values['last_name'] . "'s Room"; ?>; color: #000" position="1 3 -3" scale="4 4 4"></a-entity>
         <?php
