@@ -111,7 +111,7 @@ nav a:hover {
 
 .main_column {
     float: right;
-    width: 70%;
+    width: 68%;
     z-index: -1;
     min-height: 170px;
 }
@@ -453,4 +453,61 @@ textarea:focus {
 
 .tab-content{
     margin-top: 25px;
+}
+
+.dropdown_data_window{
+    background-color: #FFF;
+    border: 1px solid #DADADA;
+    border-radius: 0 0 8px 8px;
+    border-top: none;
+    width: 300px;
+    position:absolute;
+    right:10px;
+    top:44px;
+    overflow-y:scroll;
+}
+
+.notification_badge{
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #f00;
+    border-radius: 10px;
+    position: absolute;
+    left: 7px;
+    top: -5px;
+}
+
+.resultDisplayNotification{
+    height:auto;
+    color: #1485BD;
+    padding-bottom: 5px;
+}
+
+.notificationsProfilePic img{
+    height:40px;
+    border-radius: 7px;
+    margin: 1px 12px 0px 2px;
+    float:left;
+}
+
+.timestamp_smaller{
+    font-size: 85%;
+    margin: 0;
+}
+
+.button_holder{
+    position:relative;
+    float:right;
+}
+
+.button_holder img{
+    width: 40px;
+    height:25px;
+    margin-top:2px;
 }
