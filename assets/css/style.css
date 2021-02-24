@@ -89,6 +89,7 @@ nav a:hover {
     border-radius: 5px;
     box-shadow: 2px 2px 1px #d3d3d3;
     z-index: -1;
+    color:#555;
 }
 
 .user_details {
@@ -421,7 +422,7 @@ textarea:focus {
 
 .resultDisplay{
     padding: 5px 5px 0 5px;
-    height: 60px;
+    height: 70px;
     border-bottom: 1px solid #d3d3d3;
 }
 
@@ -501,13 +502,112 @@ textarea:focus {
     margin: 0;
 }
 
+.search{
+    margin: 6px 0 0 15%;
+}
+
+#search_text_input{
+    border: thin solid #E5E5E5;
+    float:left;
+    outline: 0;
+    height:23px;
+    width:100px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
 .button_holder{
     position:relative;
-    float:right;
+    float:left;
+    background-color: #F1F1F1;
+    border: thin solid #E5E5E5;
+    cursor: pointer;
+    height: 31px;
+    text-align: center;
+    width:50px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
 .button_holder img{
     width: 40px;
     height:25px;
-    margin-top:2px;
+    margin-top:1px;
+}
+
+.search_results{
+    background-color: #fff;
+    border: 1px solid #DADADA;
+    border-bottom: none;
+    border-top: none;
+    margin-top: 40px;
+}
+
+.search_results_footer{
+    padding: 5px 4px 0px 4px;
+    height: 27px;
+    border: 1px solid #DADADA;
+    border-top:none;
+    background-color: #2ecc71;
+    text-align: center;
+
+}
+
+.search_results_footer a{
+    color: #fff;
+}
+
+.search_result{
+    padding: 10px;
+    height:100px;
+}
+
+.searchPageFriendButtons{
+    float:right;
+}
+
+.result_profile_pic{
+    float:left;
+    margin-right: 10px;
+}
+
+.search_hr {
+    margin-bottom: 0px;
+}
+
+.searchPageFriendButtons input[type="submit"]{
+    border:none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    color: #FFF;
+}
+
+#small_profile_pics{
+    height:55px;
+    margin: 1px 12px 0px 2px;
+    float:left;
+}
+
+.settings_input{
+    border: 1px solid #CCC;
+    height:20px;
+    padding: 4px 6px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    line-height: 20px;
+}
+
+.settings_submit {
+    border:none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    color: #FFF;
+}
+
+
+.postedImage img{
+    max-height: 300px;
+    max-width: 100%;
+    display:block;
+    margin: 5px auto;
 }
