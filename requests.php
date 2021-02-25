@@ -16,10 +16,8 @@ include("includes/header.php");
         while($row=mysqli_fetch_array($query)){
             $user_from=$row['user_from'];
             $user_from_obj = new User($con,$user_from);
-            $user_first_and_last_name = $user_from_obj->getFirstAndLastName();
-            $user_username = $user_from_obj->getUsername();
 
-            echo "<a href='" . $user_username . "'>" . $user_first_and_last_name . "</a>" . " sent you a friend request!";
+            echo $user_from_obj->getFirstAndLastName() . " sent you a friend request!";
 
             $user_from_friend_array = $user_from_obj->getFriendArray();
 
