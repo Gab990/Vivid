@@ -3,6 +3,7 @@ require 'config/config.php';
 include("includes/classes/User.php");
 include("includes/classes/Post.php");
 include("includes/classes/Message.php");
+include("includes/classes/Notification.php");
 
 if (isset($_SESSION['username'])) {
     $userLoggedIn = $_SESSION['username'];
@@ -22,7 +23,7 @@ if (isset($_SESSION['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Vivid</title>
 
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="assets/js/bootstrap.js"></script>
     <script src="assets/js/main.js"></script>
@@ -30,7 +31,7 @@ if (isset($_SESSION['username'])) {
     <script src="assets/js/jcrop_bits.js"></script>
     <script src="assets/js/jquery.Jcrop.js"></script>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    
+
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/bootstrap.css">
@@ -44,21 +45,73 @@ if (isset($_SESSION['username'])) {
         <div class="logo">
             <a href="index.php">Vivid</a>
         </div>
+
+
+        <div class="search">
+            <form action="search.php" method="GET" name="search_form">
+                <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLoggedIn; ?>')" name="q" placeholder="Search..." autocomplete="off" id="search_text_input">
+
+                <div class="button_holder">
+                    <img src="assets/images/icons/magnify.png">
+                </div>
+
+            </form>
+
+            <div class="search_results">
+            </div>
+
+            <div class="search_results_footer_empty">
+            </div>
+        </div>
+
+
         <nav>
-            <a href="<?php echo $userLoggedIn;?>"><?php echo $user['first_name']; ?></a>
+
+            <?php
+            //unread messages 
+            $messages = new Message($con, $userLoggedIn);
+            $num_messages = $messages->getUnreadNumber();
+
+            //unread notificaitons 
+            $notifications = new Notification($con, $userLoggedIn);
+            $num_notifications = $notifications->getUnreadNumber();
+
+            //unread notificaitons 
+            $user_obj = new User($con, $userLoggedIn);
+            $num_requests = $user_obj->getNumberOfFriendRequests();
+            ?>
+
+            <a href="<?php echo $userLoggedIn; ?>"><?php echo $user['first_name']; ?></a>
             <a href="index.php">
                 <i class="fa fa-home fa-lg"></i>
             </a>
             <a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'message')">
                 <i class="fa fa-envelope-o fa-lg"></i>
+                <?php
+                if ($num_messages > 0) {
+                    echo '<span class="notification_badge" id="unread_message">' . $num_messages . '</span>';
+                }
+                ?>
             </a>
-            <a href="#">
-                <i class="fa fa-bell-o fa-lg"></i>
+            <a href="javascript:void(0);" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'notification')">
+                <i class="fa fa-bell-o fa-lg">
+                    <?php
+                    if ($num_notifications > 0) {
+                        echo '<span class="notification_badge" id="unread_notification">' . $num_notifications . '</span>';
+                    }
+                    ?>
+                </i>
             </a>
             <a href="requests.php">
-                <i class="fa fa-users fa-lg"></i>
+                <i class="fa fa-users fa-lg">
+                <?php
+                    if ($num_requests > 0) {
+                        echo '<span class="notification_badge" id="unread_requests">' . $num_requests . '</span>';
+                    }
+                    ?>
+                </i>
             </a>
-            <a href="#">
+            <a href="settings.php">
                 <i class="fa fa-cog fa-lg"></i>
             </a>
             <a href="includes/handlers/logout.php">
@@ -66,8 +119,78 @@ if (isset($_SESSION['username'])) {
             </a>
         </nav>
 
-        <div class="dropdown_data_window"></div>
+        <div class="dropdown_data_window" style="height:0px; border:none;"></div>
         <input type="hidden" id="dropdown_data_type" value="">
 
     </div>
+
+
+    <script>
+        //infinite loading message window
+        $(function() {
+
+            var userLoggedIn = '<?php echo $userLoggedIn; ?>';
+            var dropdownInProgress = false;
+
+            $(".dropdown_data_window").scroll(function() {
+                var bottomElement = $(".dropdown_data_window a").last();
+                var noMoreData = $('.dropdown_data_window').find('.noMoreDropdownData').val();
+
+                // isElementInViewport uses getBoundingClientRect(), which requires the HTML DOM object, not the jQuery object. The jQuery equivalent is using [0] as shown below.
+                if (isElementInView(bottomElement[0]) && noMoreData == 'false') {
+                    loadPosts();
+                }
+            });
+
+            function loadPosts() {
+                if (dropdownInProgress) { //If it is already in the process of loading some posts, just return
+                    return;
+                }
+
+                dropdownInProgress = true;
+
+                var page = $('.dropdown_data_window').find('.nextPageDropdownData').val() || 1; //If .nextPage couldn't be found, it must not be on the page yet (it must be the first time loading posts), so use the value '1'
+
+                var pageName; //Holds name of page to send ajax request to
+                var type = $('#dropdown_data_type').val();
+
+                if (type == 'notification')
+                    pageName = "ajax_load_notifications.php";
+                else if (type == 'message')
+                    pageName = "ajax_load_messages.php";
+
+                $.ajax({
+                    url: "includes/handlers/" + pageName,
+                    type: "POST",
+                    data: "page=" + page + "&userLoggedIn=" + userLoggedIn,
+                    cache: false,
+
+                    success: function(response) {
+
+                        $('.dropdown_data_window').find('.nextPageDropdownData').remove(); //Removes current .nextpage 
+                        $('.dropdown_data_window').find('.noMoreDropdownData').remove();
+
+                        $('.dropdown_data_window').append(response);
+
+                        dropdownInProgress = false;
+                    }
+                });
+            }
+
+            //Check if the element is in view
+            function isElementInView(el) {
+                var rect = el.getBoundingClientRect();
+
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && //* or $(window).height()
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth) //* or $(window).width()
+                );
+            }
+        });
+    </script>
+
+
+
     <div class="wrapper">
