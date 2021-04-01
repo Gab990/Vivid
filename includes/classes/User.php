@@ -65,6 +65,14 @@ class User {
         }
     }
 
+    public function getFriendsList(){
+        $friend_array_string= $this->user['friend_array']; //get friend array string
+
+        $friend_array_string = trim($friend_array_string, ","); //remove first and last comma
+
+        return explode(",", $friend_array_string); //split array at each comma
+    }
+
     public function didReceiveRequest($user_from){
         $user_to = $this->user['username'];
         $check_request_query=mysqli_query($this->con,"SELECT * FROM friend_requests WHERE user_to='$user_to' AND user_from='$user_from'");

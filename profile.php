@@ -1,13 +1,18 @@
 <?php
 include("includes/header.php");
 
-$message_obj = new Message($con,$userLoggedIn);
+$message_obj = new Message($con, $userLoggedIn);
 
 if (isset($_GET['profile_username'])) {
     $username = $_GET['profile_username'];
     $user_details_query = mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
-    $user_array = mysqli_fetch_array($user_details_query);
-    $num_friends = (substr_count($user_array['friend_array'], ",")) - 1;
+    $num_users_like = mysqli_num_rows($user_details_query); //To check if the user exists
+    if ($num_users_like > 0) {
+        $user_array = mysqli_fetch_array($user_details_query);
+        $num_friends = (substr_count($user_array['friend_array'], ",")) - 1;
+    } else {
+        header("Location: index.php");
+    }
 }
 
 if (isset($_POST['remove_friend'])) {
@@ -24,17 +29,17 @@ if (isset($_POST['respond_request'])) {
     header("Location: requests.php");
 }
 
-if(isset($_POST['post_message'])){
-    if(isset($_POST['message_body'])) {
-        $body=mysqli_real_escape_string($con, $_POST['message_body']);
-        $date=date("Y-m-d H:i:s");
+if (isset($_POST['post_message'])) {
+    if (isset($_POST['message_body'])) {
+        $body = mysqli_real_escape_string($con, $_POST['message_body']);
+        $date = date("Y-m-d H:i:s");
         $message_obj->sendMessage($username, $body, $date);
     }
 
     $link = '#profileTabs a[href="#messages_div"]';
     echo "<script>
                 $(function(){
-                    $('". $link ."').tab('show');
+                    $('" . $link . "').tab('show');
                 });
             </script>";
 }
@@ -63,8 +68,20 @@ if(isset($_POST['post_message'])){
             $aframe_user_username = $aframe_user_obj->getUsername();
             if ($aframe_user_name_isfriend == true) {
                 echo '<a href="aframevr.php?profile_username=' . $aframe_user_username . '"><button>Check out ' . $aframe_user_name . "'s VR Room</button></a>";
+                echo '<form action="" method="POST"><a href="https://wooded-darkened-gauge.glitch.me/?room='. $username .'&username='. $userLoggedIn .'"><input name="call_vr" type="submit" value="Call ' . $aframe_user_name . ' in VR"></a></form>';
+
             } else {
                 echo '<button disabled="true">Be ' . $aframe_user_name . "'s friend to see his VR Room!</button>";
+            }
+
+            if(isset($_POST['call_vr'])){
+                $send_vr_message_obj=new Message($con,$userLoggedIn);
+                $date = date("Y-m-d H:i:s");
+                $call_url = "https://wooded-darkened-gauge.glitch.me/?room=$username&username=$userLoggedIn";
+                $called_message_body="https://wooded-darkened-gauge.glitch.me/";
+                $send_vr_message = $send_vr_message_obj->sendMessage($_GET['profile_username'], $called_message_body, $date);
+
+                header('Location: '.$call_url);
             }
         }
         ?>
@@ -124,30 +141,36 @@ if(isset($_POST['post_message'])){
         </div>
 
 
-        
+
         <div role="tabpanel" class="tab-pane fade" id="messages_div">
-        <?php
+            <?php
 
 
-        echo "<h4>You and <a href='" . $username . "'>" . $profile_user_obj->getFirstAndLastName() . "</a></h4><hr><br>";
+            echo "<h4>You and <a href='" . $username . "'>" . $profile_user_obj->getFirstAndLastName() . "</a></h4><hr><br>";
 
-        echo "<div class='loaded_messages' id='scroll_messages'>";
-        
-        echo $message_obj->getMessages($username);
-        echo "</div>";
+            echo "<div class='loaded_messages' id='scroll_messages'>";
 
-    ?>
+            echo $message_obj->getMessages($username);
+            echo "</div>";
 
-    <div class="message_post">
+            ?>
+
+            <div class="message_post">
                 <form action="" method="POST">
-                        <textarea name='message_body' id='message_textarea' placeholder='Write your message ...'></textarea>
-                        <input type='submit' name='post_message' class='info' id='message_submit' value='Send'>
+                    <textarea name='message_body' id='message_textarea' placeholder='Write your message ...'></textarea>
+                    <input type='submit' name='post_message' class='info' id='message_submit' value='Send'>
                 </form>
             </div>
 
             <script>
-                var div = document.getElementById("scroll_messages");
-                div.scrollTop = div.scrollHeight;
+                //fixes scrolling to last message on the tab-system from bootstrap
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function() {
+                    var div = document.getElementById("scroll_messages");
+
+                    if (div != null) {
+                        div.scrollTop = div.scrollHeight;
+                    }
+                });
             </script>
 
         </div>

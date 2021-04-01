@@ -11,7 +11,7 @@ if (isset($_POST['post'])) {
     if($imageName != ""){
         $targetDir = "assets/images/posts/";
         //to ensure no 2 images have the same name
-        $imageName = $targetDir . uniqid() . basename($imageName);
+        $imageName = $targetDir . $userLoggedIn . uniqid() . basename($imageName);
         $imageFileType = pathinfo($imageName, PATHINFO_EXTENSION);
 
         if($_FILES['fileToUpload']['size'] > 10000000) {
@@ -20,7 +20,8 @@ if (isset($_POST['post'])) {
         }
 
         if((strtolower($imageFileType) != "jpeg") && (strtolower($imageFileType) != "png") && (strtolower($imageFileType) != "jpg")) {
-            $errorMessage = "Sorry, only .jpeg, .jpg and .png files are allower";
+
+            $errorMessage = "Sorry, only .jpeg, .jpg and .png files are allowed!" . $imageFileType;
             $uploadOk = 0;
         }
 
@@ -45,7 +46,7 @@ if (isset($_POST['post'])) {
             $errorMessage
         </div>";
     }
-    header("Location: index.php");
+    // header("Location: index.php");
 }
 ?>
 <div class="user_details column">

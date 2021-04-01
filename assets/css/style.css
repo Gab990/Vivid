@@ -239,13 +239,14 @@ textarea:focus {
 }
 
 .profile_left {
-    top: -10px;
     width: 17%;
     max-width: 240px;
     min-width: 130px;
-    height: 100vh;
+    height: 110vh;
     float: left;
-    position: relative;
+    position: fixed;
+    padding-top: 50px;
+    top:-10px;
     background-color: #2ecc71;
     border-right: 10px solid #56eb94;
     color: #CBEAF8;
@@ -340,6 +341,7 @@ textarea:focus {
     float: left;
     width: 70%;
     z-index: -1;
+    margin-left: 35%
 }
 
 .profile_info_bottom {
@@ -610,4 +612,21 @@ textarea:focus {
     max-width: 100%;
     display:block;
     margin: 5px auto;
+}
+
+.delReq {
+    position: relative;
+    right: 30%;
+}
+
+#post_body iframe{
+    margin-left: 20%;
+    margin-top: 15px;
+}
+
+img.profilePicSmall{
+    height: 40px;
+    width: 40px;
+    border-radius: 25px;
+    margin: 5px; 
 }
