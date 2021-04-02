@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 01, 2021 at 10:51 PM
+-- Generation Time: Apr 02, 2021 at 01:04 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
@@ -472,7 +472,9 @@ CREATE TABLE `vr_room` (
 
 INSERT INTO `vr_room` (`id`, `room_model`, `corner_model`, `corner2_model`, `skybox`, `username`, `user_closed`) VALUES
 (1, 'assets/models/Livingroomdone/Livingroomgood.glb', 'assets/models/Livingroom_assets/Livingroomlamp.gltf', 'assets/models/Livingroom_assets/Livingroomplant.gltf', 'assets/images/vr/skybox.png', 'last_test', 'no'),
-(2, 'assets/models/Livingroomdone/Livingroomgood.glb', 'assets/models/Livingroom_assets/Livingroomlamp.gltf', 'assets/models/Livingroom_assets/Livingroomplant.gltf', 'assets/images/vr/skybox.png', 'gabor_sebestyen_1', 'no');
+(2, 'assets/models/Livingroomdone/Livingroomgood.glb', 'assets/models/Livingroom_assets/Livingroomlamp.gltf', 'assets/models/Livingroom_assets/Livingroomplant.gltf', 'assets/images/vr/skybox.png', 'gabor_sebestyen_1', 'no'),
+(3, 'assets/models/Livingroomdone/Livingroomgood.glb', 'assets/models/Livingroom_assets/Livingroomlamp.gltf', 'assets/models/Livingroom_assets/Livingroomplant.gltf', 'assets/images/vr/skybox.png', 'daniel_sebestyen', 'no'),
+(4, 'assets/models/Livingroomdone/Livingroomgood.glb', 'assets/models/Livingroom_assets/Livingroomlamp.gltf', 'assets/models/Livingroom_assets/Livingroomplant.gltf', 'assets/images/vr/skybox.png', 'andrea_sebestyen', 'no');
 
 --
 -- Indexes for dumped tables
@@ -576,7 +578,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `vr_room`
 --
 ALTER TABLE `vr_room`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

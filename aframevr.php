@@ -63,6 +63,7 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
 
     <!--HTML embed component makes using HTML tags usable in A-Frame environment - created by Paul Brunt-->
     <script src="assets/js/htmlembed.js"></script>
+    <script src="assets/js/vrscript.js"></script>
 
 
     <script>
@@ -98,6 +99,8 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                         <a-assets-item id="boombox" src="assets/models/Boombox/Boombox.glb"></a-assets-item>
                         <a-assets-item id="corner" src="<?php echo $user_vrroom_values['corner_model']; ?>"></a-assets-item>
                         <a-assets-item id="corner2" src="<?php echo $user_vrroom_values['corner2_model']; ?>"></a-assets-item>
+
+                        <img id="footsteps" src="assets/images/vr/footsteps.png">
                         <img id="floor" src="assets/images/vr/floor.png">
                         <img id="skybox" src="<?php echo $user_vrroom_values['skybox']; ?>">
                     </a-assets>
@@ -112,19 +115,11 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                             <a-cursor position="0 0 -0.5" scale="0.5 0.5 0.5"></a-cursor>
                         </a-entity>
                         <!-- HAND UI MENU -->
-                        <a-entity hand-controls="hand:left">
-                            <a-entity id="handmenu" 
-                            class="screen menu3" 
-                            htmlembed="ppu:256" 
-                            scale="0.15 0.15 0.15" 
-                            position="0 0.2 -0.1" 
-                            rotation="-15 0 0" 
-                            visible="false"
-                            speech-command__show="command: show menu; 
+                        <a-entity hand-controls="hand:left" oculus-touch-controls x-button-listener>
+                            <a-entity id="handmenu" class="screen menu3" htmlembed="ppu:256" scale="0.15 0.15 0.15" position="0 0.2 -0.1" rotation="-15 0 0" visible="false" speech-command__show="command: show menu; 
                                         type: attribute; 
                                         attribute: visible; 
-                                        value: true;" 
-                            speech-command__hide="command: hide menu; 
+                                        value: true;" speech-command__hide="command: hide menu; 
                                         type: attribute; 
                                         attribute: visible; 
                                         value: false;">
@@ -161,12 +156,17 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                         </a-entity>
                     </a-entity>
 
+
                     <!-- HTML embedded SIDEMENU -->
                     <a-entity id="menu" class="screen menu dark" htmlembed="ppu:256" scale="0.46 0.46 0.46" position="-1.55 2.4 -8" rotation="7 0 0">
                         <h2 style="margin-top:0">MENU</h2>
                         <ul>
                             <li><a href="#" class="button">Home</a></li>
-                            <li><a href="#slide2" class="button">Messages</a></li>
+                            <?php
+                            if ($username == $userLoggedIn) {
+                            echo '<li><a href="#slide2" class="button">Messages</a></li>';
+                            }
+                            ?>
                             <li><a href="#slide3" class="button">Profile</a></li>
                             <li><a href="#slide4" class="button">Friends</a></li>
                         </ul>
@@ -178,8 +178,9 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                         <div id="page1">
                             <h1>Home</h1>
                             <p>Move around the room using the WASD keys or blink around using the right thumbstick</p>
-                            <p>Navigate on this screen by looking at the menu on the right and use the trigger or mouse to pick an option</p>
-                            <p>If you're using Chrome, enable microphone and control the hand menu by saying: "Show Menu" or "Hide Menu". Otherwise, you can use the spheres below the screen to make the menu appear</p>
+                            <p>Navigate on this screen by looking at the menu on the left and use the trigger or mouse to pick an option</p>
+                            <p>If you're using Chrome, enable microphone and control the hand menu by saying: "Show Menu" or "Hide Menu". Otherwise, you can use the spheres below the screen to make the menu appear
+                                or press the X button on an Oculus Touch Controller</p>
                         </div>
 
                         <div id="page2">
@@ -227,7 +228,7 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                                 </div>
                             </div>
                             <div class="profile_right">
-                            <img style="border-radius:30px; border:5px solid yellow" width="450px" height="450px" src="<?php echo $user_array['profile_pic']; ?>">
+                                <img style="border-radius:30px; border:5px solid yellow" width="450px" height="450px" src="<?php echo $user_array['profile_pic']; ?>">
                             </div>
                         </div>
 
@@ -256,18 +257,50 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                         <h2 style="margin-top:0; font-size: 50px;text-transform:uppercase"><?php echo $user_room_values['first_name'] . " " . $user_room_values['last_name'] . "'s Room"; ?></h2>
                     </a-entity>
 
-                    <!-- Show messages -->
-                    <a-sphere material="color: #FFAA00;" radius="0.1" position="0 0.8 -8.1" 
-                    event-set__showfriend="_target:#handmenu;
+                    <!-- Leave room button -->
+                    <a-entity id="leaveRoomButton" style="border-radius: 0; width:400px; background: #DC143C;" class="screen menu2" htmlembed="ppu:256" scale="0.46 0.46 0.46" position="0.95 1.25 1" rotation="0 180 0">
+                        <a href="index.php" style="text-decoration:none; color: white; margin:0; font-size: 50px;text-transform:uppercase">Leave</a>
+                    </a-entity>
+
+                    <!-- Visit friends button -->
+                    <a-entity id="visitFriendButton" style="border-radius: 0; width:400px; background: #FFAA00;" class="screen menu2" htmlembed="ppu:256" scale="0.46 0.46 0.46" position="0.95 1.6 1" rotation="0 180 0">
+                        <a href="javascript:void(0)" style="text-decoration:none; color: white; margin:0; font-size: 50px;text-transform:uppercase">Visit Friend</a>
+                    </a-entity>
+
+                    <a-entity id="friendsEntity" style="border-radius: 0; width:650px; height:fit-content; background: #FFAA00; background-position: center;" class="screen menu2" htmlembed="ppu:256" scale="0.46 0.46 0.46" visible="false" position="0 50 0" rotation="0 180 0">
+                            <h2>Friends</h2>
+                    <?php
+                            $user2_obj = new User($con, $userLoggedIn);
+                            foreach ($user2_obj->getFriendsList() as $friend2) {
+                                $friend2_obj = new User($con, $friend2);
+                                echo "<a href='aframevr.php?profile_username=$friend2' style='text-decoration:none;color:white;font-size:30px;'>
+                                <img width='50px' height='50px' style='border:3px solid yellow;margin-right:35px;' src='" . $friend2_obj->getProfilePic() . "'><span id='profileLink' style='padding-left:15px;padding-right:15px; border-radius:10px'>"
+                                    . $friend2_obj->getFirstAndLastName() .
+                                    "</span></a><br>";
+                            }
+                            echo "<br><a style='background: red; color: white; text-decoration:none; padding:5px 10px;' href='javascript:void(0)' id='backButtonFriend'>Back</a>";
+                    ?>
+                    </a-entity>
+
+
+                    <!-- Go home button if guest -->
+
+                    <?php
+                            if ($username !== $userLoggedIn) {
+                                echo '<a-entity id="goHomeButton" style="border-radius: 0; width:400px; background: #90EE90;" class="screen menu2" htmlembed="ppu:256" scale="0.46 0.46 0.46" position="0.95 0.9 1" rotation="0 180 0">
+                                <a href="aframevr.php?profile_username='.$userLoggedIn.'" style="text-decoration:none; color: white; margin:0; font-size: 50px;text-transform:uppercase">Home</a>
+                            </a-entity>';
+                            }?>
+
+                    <!-- Show menu globe -->
+                    <a-sphere material="color: #FFAA00;" radius="0.1" position="0 0.8 -8.1" event-set__showfriend="_target:#handmenu;
                                          _event:click;
-                                         visible: true"
-                    animation__enter="property: material.color;
+                                         visible: true" animation__enter="property: material.color;
                                  from: #FFAA00;
                                  to:#90EE90;
                                  startEvents: mouseenter;
                                  dur:750;
-                                 easing:linear;"
-                    animation__leave="property: material.color;
+                                 easing:linear;" animation__leave="property: material.color;
                                  from: #90EE90;
                                  to:#FFAA00;
                                  startEvents: mouseleave;
@@ -275,18 +308,15 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                                  easing:linear;">
                     </a-sphere>
 
-                    <!-- Hide messages -->
-                    <a-sphere material="color: #DC143C;" radius="0.1" position="0.4 0.8 -8.1" 
-                    event-set__hidefriend="_target:#handmenu;
+                    <!-- Hide menu globe -->
+                    <a-sphere material="color: #DC143C;" radius="0.1" position="0.4 0.8 -8.1" event-set__hidefriend="_target:#handmenu;
                                          _event:click;
-                                         visible: false"
-                    animation__enter="property: material.color;
+                                         visible: false" animation__enter="property: material.color;
                                  from: #DC143C;
                                  to:#90EE90;
                                  startEvents: mouseenter;
                                  dur:750;
-                                 easing:linear;"
-                    animation__leave="property: material.color;
+                                 easing:linear;" animation__leave="property: material.color;
                                  from: #90EE90;
                                  to:#DC143C;
                                  startEvents: mouseleave;
@@ -323,6 +353,28 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                         });
                     }
                     messageUpdate();
+
+                    //Button controls
+
+
+                    let backButtonFriend = document.getElementById("backButtonFriend");
+                    let friendsEntity = document.getElementById("friendsEntity");
+                    let visitFriendButton = document.getElementById("visitFriendButton");
+                    let leaveRoomButton = document.getElementById("leaveRoomButton");
+
+                    visitFriendButton.addEventListener("click",function(){
+                        friendsEntity.setAttribute("visible","true");
+                        friendsEntity.setAttribute("position", "0.95 1 0.7");
+                        visitFriendButton.setAttribute("visible", "false");
+                        leaveRoomButton.setAttribute("visible","false");
+                    });
+
+                    backButtonFriend.addEventListener("click",function(){
+                        friendsEntity.setAttribute("visible","false");
+                        friendsEntity.setAttribute("position", "0 50 0");
+                        visitFriendButton.setAttribute("visible", "true");
+                        leaveRoomButton.setAttribute("visible","true");
+                    });
                 </script>
             </div>
         </div>
