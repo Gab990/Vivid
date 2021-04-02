@@ -100,7 +100,6 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                         <a-assets-item id="corner" src="<?php echo $user_vrroom_values['corner_model']; ?>"></a-assets-item>
                         <a-assets-item id="corner2" src="<?php echo $user_vrroom_values['corner2_model']; ?>"></a-assets-item>
 
-                        <img id="footsteps" src="assets/images/vr/footsteps.png">
                         <img id="floor" src="assets/images/vr/floor.png">
                         <img id="skybox" src="<?php echo $user_vrroom_values['skybox']; ?>">
                     </a-assets>
