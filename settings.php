@@ -12,9 +12,9 @@ include("includes/form_handlers/settings_handler.php");
     
     ?>
     <br>
-    <a href="upload.php">Upload a new profile picture</a> <br><br><br>
+    <a href="upload.php">Upload a new profile picture</a> <br><br><hr>
 
-    Modify the values and click 'Update Details'
+    <h4>Change details</h4>
 
     <?php
         $user_data_query = mysqli_query($con,"SELECT first_name, last_name, email FROM users WHERE username='$userLoggedIn'");

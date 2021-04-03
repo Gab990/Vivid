@@ -8,44 +8,50 @@ if (isset($_POST['post'])) {
     $imageName = $_FILES['fileToUpload']['name'];
     $errorMessage = "";
 
-    if($imageName != ""){
+    if ($imageName != "") {
         $targetDir = "assets/images/posts/";
         //to ensure no 2 images have the same name
         $imageName = $targetDir . uniqid() . basename($imageName);
         $imageFileType = pathinfo($imageName, PATHINFO_EXTENSION);
 
-        if($_FILES['fileToUpload']['size'] > 10000000) {
+        if ($_FILES['fileToUpload']['size'] > 10000000) {
             $errorMessage = "Sorry, your file is too large";
             $uploadOk = 0;
         }
 
+<<<<<<< Updated upstream
         if((strtolower($imageFileType) != "jpeg") && (strtolower($imageFileType) != "png") && (strtolower($imageFileType) != "jpg")) {
             $errorMessage = "Sorry, only .jpeg, .jpg and .png files are allower";
+=======
+        if ((strtolower($imageFileType) != "jpeg") && (strtolower($imageFileType) != "png") && (strtolower($imageFileType) != "jpg")) {
+
+            $errorMessage = "Sorry, only .jpeg, .jpg and .png files are allowed!" . $imageFileType;
+>>>>>>> Stashed changes
             $uploadOk = 0;
         }
 
-        if($uploadOk) {
-            if(move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $imageName)) {
+        if ($uploadOk) {
+            if (move_uploaded_file($_FILES['fileToUpload']['tmp_name'], $imageName)) {
                 //image uploaded ok
-            }
-            else{
+            } else {
                 //image didn't uplaod
                 $uploadOk = 0;
             }
         }
     }
 
-    if($uploadOk){
+    if ($uploadOk) {
         $post = new Post($con, $userLoggedIn);
         $post->submitPost($_POST['post_text'], 'none', $imageName);
-    }
-
-    else {
+    } else {
         echo "<div style='text-align:center;' class='alert alert-danger'>
             $errorMessage
         </div>";
     }
+<<<<<<< Updated upstream
     header("Location: index.php");
+=======
+>>>>>>> Stashed changes
 }
 ?>
 <div class="user_details column">
@@ -54,33 +60,46 @@ if (isset($_POST['post'])) {
     <div class="user_details_left_right">
         <a href="<?php echo $userLoggedIn; ?>">
             <?php
-            echo $user['first_name'] . " " . $user['last_name'];
+            echo $user['first_name'] . " " . $user['last_name'] . "<br>";
             ?>
         </a>
         <br>
         <?php echo "Posts: " . $user['num_posts'] . "<br>";
-        echo "Likes: " . $user['num_likes'];
+        echo "Likes: " . $user['num_likes'] . "<br>";
+        echo "Joined: " . $user['signup_date'];
         ?>
     </div>
 </div>
 
 <div class="main_column column">
     <form class="post_form" action="index.php" method="POST" enctype="multipart/form-data">
-        <input type="file" name="fileToUpload" id="fileToUpload">
-        <textarea name="post_text" id="post_text" placeholder="Got something to say?"></textarea>
+        <input type="file" name="fileToUpload" id="fileToUpload" hidden>
+        <label id="sharePicButton" for="fileToUpload">Share a Pic!</label>
+        <span id="file-chosen">No file chosen</span>
+        <script>
+            const actualBtn = document.getElementById('fileToUpload');
+
+            const fileChosen = document.getElementById('file-chosen');
+
+            actualBtn.addEventListener('change', function() {
+                fileChosen.textContent = this.files[0].name;
+            })
+        </script>
+        <br>
+        <textarea name="post_text" id="post_text" placeholder="Post something!"></textarea>
         <input type="submit" name="post" id="post_button" value="Post">
         <hr>
     </form>
 
     <div class="posts_area"></div>
     <img src="assets/images/icons/loading.gif" alt="loading icon" id="loading" width="50" height="50">
-
 </div>
 
 
 <div class="user_details column">
 
-    <h4>Popular</h4>
+    <h4>Popular terms</h4>
+    <hr>
     <div class="trends">
         <?php
         $query = mysqli_query($con, "SELECT * FROM trends ORDER BY hits DESC LIMIT 9");
@@ -96,9 +115,32 @@ if (isset($_POST['post'])) {
             echo $trimmed_word . $word_dot;
             echo "<br></div>";
         }
-
         ?>
     </div>
+</div>
+
+<div class="user_details column">
+    <h4>Current version 0.8 <br> Open-beta version</h4>
+    <hr>
+    <h4>Version details:</h4>
+    <ul>
+        <li>Social network features are working, users can send and receive messages</li>
+        <li>Posting and commenting is possible</li>
+        <li>Registering works, users get added to db</li>
+        <li>Friend-system in place, adding, removing friends are working</li>
+        <li>VR room system in place, all users have their own rooms</li>
+        <li>Popular terms are searched thoughout all posts in the db and showed</li>
+        <li>Notification system works</li>
+        <li>Like system works, used iframe so it updates without refreshing the whole page</li>
+        <li>Endless scrolling system added</li>
+        <li>User can change profile settings</li>
+        <li>Users can close their accounts</li>
+        <li>Added option to share videos and images based on feedback</li>
+        <li>Added side navbar</li>
+        <li>Added small message tab at the bottom</li>
+        <li>Added a VR call feature. Mostly works, still have some issues that need to be fixed</li>
+        <li>Most issues come from the new A-Frame and Three.js version. Will have to wait for the devs to update the components. Then the physics system and collision can be added</li>
+    </ul>
 </div>
 
 

@@ -29,7 +29,11 @@ if (isset($_SESSION['username'])) {
         * {
             font-size: 12px;
             font-family: Arial, Helvetica, sans-serif;
+            color: #1ce8ff;
         }
+
+
+        
     </style>
 
     <script>
@@ -132,9 +136,9 @@ if (isset($_SESSION['username'])) {
                 }
 
                 if ($interval->m == 1) {
-                    $time_message = $interval->m . " month" . $days; //1 month ago + days
+                    $time_message = $interval->m . " month " . $days; //1 month ago + days
                 } else {
-                    $time_message = $interval->m . " months" . $days; //1+ months ago + days
+                    $time_message = $interval->m . " months " . $days; //1+ months ago + days
                 }
             } else if ($interval->d >= 1) {
                 if ($interval->d == 1) {

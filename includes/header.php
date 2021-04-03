@@ -43,7 +43,7 @@ if (isset($_SESSION['username'])) {
 
     <div class="top_bar">
         <div class="logo">
-            <a href="index.php">Vivid</a>
+            <a style="margin:0;padding:0" href="index.php"><img width="45" height="45" style="padding-top:2px;padding-left:50px;" src="assets/images/icons/logo.png"></a>
         </div>
 
 
@@ -52,7 +52,7 @@ if (isset($_SESSION['username'])) {
                 <input type="text" onkeyup="getLiveSearchUsers(this.value, '<?php echo $userLoggedIn; ?>')" name="q" placeholder="Search..." autocomplete="off" id="search_text_input">
 
                 <div class="button_holder">
-                    <img src="assets/images/icons/magnify.png">
+                <img width="30" height="30" src="assets/images/icons/magnify.png" alt="">
                 </div>
 
             </form>
@@ -104,7 +104,7 @@ if (isset($_SESSION['username'])) {
             </a>
             <a href="requests.php">
                 <i class="fa fa-users fa-lg">
-                <?php
+                    <?php
                     if ($num_requests > 0) {
                         echo '<span class="notification_badge" id="unread_requests">' . $num_requests . '</span>';
                     }
@@ -191,6 +191,77 @@ if (isset($_SESSION['username'])) {
         });
     </script>
 
-
-
+    <img id="bgImage" src="assets/images/backgrounds/test3.gif" alt="">
     <div class="wrapper">
+        <nav class="sidebar_scroll">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
+                <defs>
+                    <style width="50px">
+                        .cls-1 {
+                            fill: #1ce8ff;
+                            stroke: #000;
+                            stroke-miterlimit: 10;
+                        }
+
+                        .outerRec {
+                            fill: #0d0e30;
+                        }
+                    </style>
+                </defs>
+                <title>Asset 3</title>
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_2-2" data-name="Layer 2">
+                        <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="index.php" class="diamond_neon">
+                            <rect class="cls-1" x="38.93" y="38.96" width="50.95" height="50.95" transform="translate(-26.7 64.41) rotate(-45)" />
+                        </a>
+                    </g>
+                </g>
+            </svg></i>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
+                <title>Asset 3</title>
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_2-2" data-name="Layer 2">
+                        <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="messages.php" class="diamond_neon">
+                            <rect class="cls-1" x="38.93" y="38.96" width="50.95" height="50.95" transform="translate(-26.7 64.41) rotate(-45)" />
+                        </a>
+                    </g>
+                </g>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
+                <title>Asset 3</title>
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_2-2" data-name="Layer 2">
+                        <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="requests.php" class="diamond_neon">
+                            <rect class="cls-1" x="38.93" y="38.96" width="50.95" height="50.95" transform="translate(-26.7 64.41) rotate(-45)" />
+                        </a>
+                    </g>
+                </g>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
+                <title>Asset 3</title>
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_2-2" data-name="Layer 2">
+                        <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="settings.php" class="diamond_neon">
+                            <rect class="cls-1" x="38.93" y="38.96" width="50.95" height="50.95" transform="translate(-26.7 64.41) rotate(-45)" />
+                        </a>
+                    </g>
+                </g>
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
+                <title>Asset 3</title>
+                <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_2-2" data-name="Layer 2">
+                        <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="logout.php" class="diamond_neon">
+                            <rect class="cls-1" x="38.93" y="38.96" width="50.95" height="50.95" transform="translate(-26.7 64.41) rotate(-45)" />
+                        </a>
+                    </g>
+                </g>
+            </svg>
+        </nav>
+
+        <div class="chat_box" onclick="getDropdownData('<?php echo $userLoggedIn; ?>', 'message2')">
+            <a href="messages.php"><h4 id="messagetitle">Messages</h4></a>
+            <p style="color:white;">Click to load your latest messages</p>
+            <div class="dropdown_data_window2" style="height:0px; border:none;"></div>
+            <input type="hidden" id="dropdown_data_type2" value="">
+        </div>

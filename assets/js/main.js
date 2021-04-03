@@ -35,13 +35,6 @@ $(document).ready(function(){
 
     });
 
-    //vr js
-    $('#VRwindow').hide();
-
-    $('#vr_button').click(function(){
-        $('#VRwindow').show();
-    });
-
 });
 
 //hide all results when clicking away
@@ -85,6 +78,11 @@ function getDropdownData(user,type){
             $("span").remove("#unread_message");
         }
 
+        else if(type=='message2'){
+            pageName = "ajax_load_messages_2.php";
+            $("span").remove("#unread_message");
+        }
+
         var ajaxreq = $.ajax({
             url: "includes/handlers/" + pageName,
             type: "POST",
@@ -92,9 +90,16 @@ function getDropdownData(user,type){
             cache: false,
 
             success: function(response) {
+                if(pageName=="ajax_load_messages.php"||pageName=="ajax_load_notifications.php"){
                 $(".dropdown_data_window").html(response);
                 $(".dropdown_data_window").css({"padding" : "0px","height":"280px", "border" : "1px solid #DADADA"});
                 $("#dropdown_data_type").val(type);
+                }
+                else{
+                    $(".dropdown_data_window2").html(response);
+                    $(".dropdown_data_window2").css({"padding" : "0px","height":"fit-content"});
+                    $("#dropdown_data_type2").val(type);
+                }
             }
         });
     }

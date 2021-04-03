@@ -55,16 +55,22 @@ if(isset($_POST['post_message'])){
         <p><?php echo "Friends: " . $num_friends; ?></p>
 
         <?php if ($username == $userLoggedIn) {
-            echo '<a href="aframevr.php?profile_username=' . $username . '"><button>Check out my VR Room</button></a>';
+            echo '<a href="aframevr.php?profile_username=' . $username . '"><button id="vrRoomButton">Visit VR Room</button></a>';
         } else {
             $aframe_user_obj = new User($con, $username);
             $aframe_user_name = $aframe_user_obj->getFirstAndLastName();
             $aframe_user_name_isfriend = $aframe_user_obj->isFriend($userLoggedIn);
             $aframe_user_username = $aframe_user_obj->getUsername();
             if ($aframe_user_name_isfriend == true) {
+<<<<<<< Updated upstream
                 echo '<a href="aframevr.php?profile_username=' . $aframe_user_username . '"><button>Check out ' . $aframe_user_name . "'s VR Room</button></a>";
+=======
+                echo '<a href="aframevr.php?profile_username=' . $aframe_user_username . '"><button id="vrRoomButton">Visit ' . $aframe_user_name . "'s VR Room</button></a>";
+                echo '<form action="" method="POST"><a href="https://wooded-darkened-gauge.glitch.me/?room='. $username .'&username='. $userLoggedIn .'"><input name="call_vr" type="submit" value="Call ' . $aframe_user_name . ' in VR"></a></form>';
+
+>>>>>>> Stashed changes
             } else {
-                echo '<button disabled="true">Be ' . $aframe_user_name . "'s friend to see his VR Room!</button>";
+                echo '<button id="vrRoomButton" disabled="true">Be ' . $aframe_user_name . "'s friend to see his VR Room!</button>";
             }
         }
         ?>
@@ -99,7 +105,7 @@ if(isset($_POST['post_message'])){
     <?php
     if ($userLoggedIn != $username) {
         echo '<div class="profile_info_bottom">';
-        echo $logged_in_user_obj->getMutualFriends($username) . " Mutual Friend(s)";
+        echo "<p style='text-align:center'>" . $logged_in_user_obj->getMutualFriends($username) . " Mutual Friend(s)</p>";
         echo '</div>';
     }
 

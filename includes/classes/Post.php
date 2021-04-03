@@ -204,7 +204,7 @@ class Post
                     }
 
                     if ($userLoggedIn == $added_by) {
-                        $delete_button = "<button class='delete_button btn-danger' id='post$id'>X</button>";
+                        $delete_button = "<button class='delete_button btn-danger2' id='post$id'>X</button>";
                     } else
                         $delete_button = "";
 
@@ -311,7 +311,7 @@ class Post
                     <br>$imageDiv<br><br>
             <div class='newsfeedPostOptions'>
             Comments($commets_check_num)&nbsp;&nbsp;&nbsp;
-            <iframe src='like.php?post_id=$id' scrolling='no'></iframe>
+            <iframe class='postIframe' src='like.php?post_id=$id' scrolling='no'></iframe>
             </div>
             </div>
             <div class='post_comment' id='toggleComment$id' style='display:none;'>

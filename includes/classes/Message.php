@@ -51,7 +51,16 @@ class Message
             $user_to = $row['user_to'];
             $user_from = $row['user_from'];
             $body = $row['body'];
+<<<<<<< Updated upstream
 
+=======
+            if(strpos($body, "https://wooded-darkened-gauge.glitch.me/") !== false){
+                $div_top="<div class='message vrCallMessage' id='grey' style='width:80%;margin-left:10%;'>";
+                $body="<a href='".$body."' target='_blank'>VR CALL</a>";
+                $data = $data . $div_top . $body . "</div><br><br>";
+            }
+            else{
+>>>>>>> Stashed changes
             $div_top = ($user_to == $userLoggedIn) ? "<div class='message' id='green'>" : "<div class='message' id='blue'>"; //conditional statement - equals to if statement. Depending whether  statement in parenthesis is true divtop equals the value before the colon, else it equals to the one after
             $data = $data . $div_top . $body . "</div><br><br>";
         }

@@ -31,12 +31,24 @@ if (isset($_SESSION['username'])) {
         font-family: Arial, Helvetica, sans-serif;
     }
     body{
-        background-color:#fff;
+        background-color:transparent;
+        color:whitesmoke;
     }
     form{
     position:absolute;
-    top:0
-}
+    top:3px;
+    }
+    input[type="submit"]:hover{
+    -webkit-transition: 0.2s;
+    transition: 0.2s;
+    color: #0d0e30;
+    background-color: #1ce8ff;
+    -webkit-box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 8px #1ce8ff, 0 0 2px #1ce8ff !important;
+            box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 8px #1ce8ff, 0 0 2px #1ce8ff !important;
+    -webkit-transition-delay: 0.2s;
+            transition-delay: 0.2s;
+    border-radius: 5px;
+    }
 </style>
     <?php
     //get id of post
