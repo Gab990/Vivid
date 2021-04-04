@@ -13,9 +13,12 @@
     src: url("../fonts/Neuropol.ttf");
 }
 
+*, ::after, ::before {
+    box-sizing: initial;
+}
+
 html{
     height:100%;
-    
 }
 
 body {
@@ -23,6 +26,11 @@ body {
     line-height: 17px;
     font-family: Arial, Helvetica, sans-serif !important;
     font-size: 0.9rem;
+}
+
+.container-fluid{
+    margin:0 !important;
+    padding:0 !important;
 }
 
 a {
@@ -177,13 +185,23 @@ textarea:focus {
     color: whitesmoke;
 }
 
+.modal{
+    height:auto !important;
+    padding-top:50px!important;
+    background:transparent
+}
+
+.form-control{
+    padding:0 !important;
+}
+
 .btn-danger2:hover{
     background:crimson;
     transition: 300ms;
 }
 
 .post_form input[type='submit'] {
-    width: 11%;
+    width: 80px;
     height: 60px;
     border: none;
     border-radius: 3px;
@@ -193,7 +211,7 @@ textarea:focus {
     position: absolute;
     outline: 5px solid transparent;
     margin: 0;
-    margin-top:5px;
+    /* margin-top:5px; */
 }
 
 .post_form input[type='submit']:active {
@@ -249,9 +267,8 @@ textarea:focus {
     color: #1ce8ff;
     text-shadow: #a0ddb9 0.5px 0.5px 0px;
     border-radius: 5px;
-    width: 12%;
+    width: 50px;
     height: 40px;
-    margin-top: 3px;
     position: absolute;
     transition: 300ms;
 }
@@ -616,7 +633,7 @@ textarea:focus {
 }
 
 .search{
-    margin: 6px 0 0 15%;
+    margin: 6px 0 0 0;
 }
 
 #search_text_input{
@@ -926,17 +943,31 @@ input[type="submit"]:hover {
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-
+    .sm-hidden{
+        display:none;
+    }
 }
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {}
 
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {}
+@media only screen and (min-width: 768px) {
+    .md-hidden{
+        display:none;
+    }
+}
 
 /* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {}
+@media only screen and (min-width: 992px) {
+    .lg-hidden{
+        display:none;
+    }
+}
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {}
+@media only screen and (min-width: 1200px) {
+    .xl-hidden{
+        display: none;
+    }
+}

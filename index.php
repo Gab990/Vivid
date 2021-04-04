@@ -45,6 +45,7 @@ if (isset($_POST['post'])) {
     }
 }
 ?>
+
 <div class="user_details column">
     <a href="<?php echo $userLoggedIn; ?>"> <img src="<?php echo $user['profile_pic']; ?>"></a>
 
@@ -61,6 +62,9 @@ if (isset($_POST['post'])) {
         ?>
     </div>
 </div>
+
+
+
 
 <div class="main_column column ">
     <form class="post_form" action="index.php" method="POST" enctype="multipart/form-data">
@@ -109,6 +113,7 @@ if (isset($_POST['post'])) {
         ?>
     </div>
 </div>
+
 
 <div class="user_details column">
     <h4>Current version 0.8 <br> Open-beta version</h4>
