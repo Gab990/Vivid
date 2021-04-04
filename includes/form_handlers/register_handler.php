@@ -160,10 +160,7 @@ if(isset($_POST['register_button'])){
             }
 
             $query = mysqli_query($con,"INSERT INTO users VALUES ('','$fname','$lname','$username','$em','$password','$date','$profile_pic','0','0','no',',')");
-<<<<<<< Updated upstream
-=======
             $query2 = mysqli_query($con, "INSERT INTO vr_room VALUES ('','assets/models/Livingroomdone/Livingroomgood.glb','assets/models/Livingroom_assets/Livingroomlamp.gltf','assets/models/Livingroom_assets/Livingroomplant.gltf','assets/images/vr/skybox.png','$username','no')");
->>>>>>> Stashed changes
             
             array_push($error_array,"<span style='color: #14C800;'>You're all set! Go ahead and login!</span><br>");
 

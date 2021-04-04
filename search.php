@@ -135,3 +135,5 @@ if (isset($_GET['type'])) {
     ?>
 
 </div>
+</body>
+</html>

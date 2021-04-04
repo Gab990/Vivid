@@ -59,7 +59,8 @@ require 'includes/form_handlers/login_handler.php';
                     <input type="password" name="log_password" placeholder="Password">
                     <br>
                     <input type="submit" name="login_button" value="Login">
-                    <br>
+                    <br><br>
+                    <input onclick="cookieRemind()" type="checkbox" name="check_box">Remember me<br>
                     <?php if (in_array("Email or password was incorrect<br>", $error_array)) echo "<p class='error'>Email or password was incorrect</p><br>"; ?>
                     <br>
                     <a href="#" id="signup" class="signup">Need an account? Register here!</a>
@@ -117,6 +118,19 @@ require 'includes/form_handlers/login_handler.php';
     </div>
     </div>
 </main>
+
+<div class="overlay">
+    Cookies are stored on your computer so you don't have to log in every time!
+</div>
+
+<script>
+        let element = document.querySelector(".overlay");
+        element.style.display="none";
+    function cookieRemind(){
+        element.style.display="block";
+    }
+</script>
+
 </body>
 
 </html>

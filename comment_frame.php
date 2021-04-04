@@ -96,9 +96,7 @@ if (isset($_SESSION['username'])) {
     ?>
 
     <form action="comment_frame.php?post_id=<?php echo $post_id; ?>" id="comment_form" name="postComment<?php echo $post_id; ?>" method="POST">
-        <textarea name="post_body">
-
-        </textarea>
+        <textarea name="post_body"></textarea>
         <input type="submit" name="postComment<?php echo $post_id; ?>" value="Post">
 
     </form>
@@ -160,9 +158,9 @@ if (isset($_SESSION['username'])) {
                 }
             } else {
                 if ($interval->s < 45) {
-                    $time_message = "Just now"; //1 day ago
+                    $time_message = "Just now"; //less than a minute ago
                 } else {
-                    $time_message = $interval->s . " seconds ago"; //1+ days ago
+                    $time_message = $interval->s . " seconds ago"; //Around 1 min ago
                 }
             }
 

@@ -171,7 +171,7 @@ class Post
                 $body = $row['body'];
                 $added_by = $row['added_by'];
                 $date_time = $row['date_added'];
-                $imagePath = $row['image'];
+                $imagePath = $row['image_uploaded'];
 
                 //prepare user_to string so it can be included even if not posted to a user
                 if ($row['user_to'] == 'none') {
@@ -258,9 +258,9 @@ class Post
                         }
 
                         if ($interval->m == 1) {
-                            $time_message = $interval->m . " month" . $days; //1 month ago + days
+                            $time_message = $interval->m . " month " . $days; //1 month ago + days
                         } else {
-                            $time_message = $interval->m . " months" . $days; //1+ months ago + days
+                            $time_message = $interval->m . " months " . $days; //1+ months ago + days
                         }
                     } else if ($interval->d >= 1) {
                         if ($interval->d == 1) {
@@ -454,9 +454,9 @@ class Post
                     }
 
                     if ($interval->m == 1) {
-                        $time_message = $interval->m . " month" . $days; //1 month ago + days
+                        $time_message = $interval->m . " month " . $days; //1 month ago + days
                     } else {
-                        $time_message = $interval->m . " months" . $days; //1+ months ago + days
+                        $time_message = $interval->m . " months " . $days; //1+ months ago + days
                     }
                 } else if ($interval->d >= 1) {
                     if ($interval->d == 1) {
@@ -721,5 +721,37 @@ class Post
         }
 
         echo $str;
+    }
+
+    public function getPostedImagesVR($user){
+        $query=mysqli_query($this->con, "SELECT added_by, date_added, image_uploaded FROM posts WHERE (added_by='$user' AND image_uploaded!='')");
+        if (mysqli_num_rows($query) > 0) {
+            $i = 10;
+            while ($post_row = mysqli_fetch_array($query)) {
+                $added = $post_row['added_by'];
+                $date = $post_row['date_added'];
+                $im = $post_row['image_uploaded'];
+                echo "<a-image position='$i 3 5' src='$im'></a-image>";
+                $i++;
+            }
+        }
+        else{
+            echo "empty";
+        }
+    }
+
+    public function getRandomPostedImagesVR($user){
+        $query=mysqli_query($this->con, "SELECT image_uploaded FROM posts WHERE (added_by='$user' AND image_uploaded!='') ORDER BY RAND() LIMIT 1");
+        if (mysqli_num_rows($query) > 0) {
+            while ($post_row = mysqli_fetch_array($query)) {
+                $im = $post_row['image_uploaded'];
+                echo "<a-image scale='0.35 0.35 0.35' rotation='-20 0 0' position='-1.195 0.91 -8.07' src='$im'></a-image>";
+            }
+        }
+        else{
+            $user_obj2=new User($this->con, $user);
+            $im=$user_obj2->getProfilePic();
+            echo "<a-image scale='0.35 0.35 0.35' rotation='-20 0 0' position='-1.195 0.91 -8.07' src='$im'></a-image>";
+        }
     }
 }

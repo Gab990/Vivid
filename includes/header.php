@@ -5,6 +5,27 @@ include("includes/classes/Post.php");
 include("includes/classes/Message.php");
 include("includes/classes/Notification.php");
 
+if(isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
+ 
+	$email = $_COOKIE['email'];
+	$password = $_COOKIE['password'];
+ 
+	$query = mysqli_query($con, "SELECT username FROM users WHERE email='$email' AND password='$password'");
+ 
+	if(mysqli_num_rows($query) > 0) {
+ 
+		$row = mysqli_fetch_array($query);
+ 
+		$_SESSION['username'] = $row['username'];
+ 
+	}
+ 
+	else {
+ 
+		header("Location: register.php");
+	}
+}
+
 if (isset($_SESSION['username'])) {
     $userLoggedIn = $_SESSION['username'];
     $user_details_query = mysqli_query($con, "SELECT * FROM users WHERE username='$userLoggedIn'");
@@ -16,11 +37,12 @@ if (isset($_SESSION['username'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
     <title>Welcome to Vivid</title>
 
 
@@ -54,7 +76,6 @@ if (isset($_SESSION['username'])) {
                 <div class="button_holder">
                 <img width="30" height="30" src="assets/images/icons/magnify.png" alt="">
                 </div>
-
             </form>
 
             <div class="search_results">
@@ -191,7 +212,13 @@ if (isset($_SESSION['username'])) {
         });
     </script>
 
-    <img id="bgImage" src="assets/images/backgrounds/test3.gif" alt="">
+
+<!--BACKGROUND-->
+    <img id="bgImage" src="assets/images/backgrounds/bg.gif" alt="">
+
+
+
+
     <div class="wrapper">
         <nav class="sidebar_scroll">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
@@ -208,7 +235,7 @@ if (isset($_SESSION['username'])) {
                         }
                     </style>
                 </defs>
-                <title>Asset 3</title>
+                <title>Home</title>
                 <g id="Layer_2" data-name="Layer 2">
                     <g id="Layer_2-2" data-name="Layer 2">
                         <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="index.php" class="diamond_neon">
@@ -218,7 +245,7 @@ if (isset($_SESSION['username'])) {
                 </g>
             </svg></i>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
-                <title>Asset 3</title>
+                <title>Messages</title>
                 <g id="Layer_2" data-name="Layer 2">
                     <g id="Layer_2-2" data-name="Layer 2">
                         <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="messages.php" class="diamond_neon">
@@ -228,7 +255,7 @@ if (isset($_SESSION['username'])) {
                 </g>
             </svg>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
-                <title>Asset 3</title>
+                <title>Friends</title>
                 <g id="Layer_2" data-name="Layer 2">
                     <g id="Layer_2-2" data-name="Layer 2">
                         <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="requests.php" class="diamond_neon">
@@ -238,7 +265,7 @@ if (isset($_SESSION['username'])) {
                 </g>
             </svg>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
-                <title>Asset 3</title>
+                <title>Settings</title>
                 <g id="Layer_2" data-name="Layer 2">
                     <g id="Layer_2-2" data-name="Layer 2">
                         <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="settings.php" class="diamond_neon">
@@ -248,7 +275,7 @@ if (isset($_SESSION['username'])) {
                 </g>
             </svg>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128.69 128.69">
-                <title>Asset 3</title>
+                <title>Logout</title>
                 <g id="Layer_2" data-name="Layer 2">
                     <g id="Layer_2-2" data-name="Layer 2">
                         <rect class="cls-1 outerRec" x="19.35" y="19.35" width="90" height="90" transform="translate(64.35 -26.65) rotate(45)" /><a href="logout.php" class="diamond_neon">

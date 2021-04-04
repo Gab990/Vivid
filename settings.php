@@ -1,11 +1,9 @@
 <?php
 include("includes/header.php");
 include("includes/form_handlers/settings_handler.php");
-
 ?>
 
 <div class="main_column column">
-
     <h4>Account Settings</h4>
     <?php
     echo "<img src='" . $user['profile_pic'] . "' id='small_profile_pics'>";
@@ -52,3 +50,5 @@ include("includes/form_handlers/settings_handler.php");
         <input type="submit" name="close_account" id="close_account" class="danger settings_submit" value="Close Account">
     </form>
 </div>
+</body>
+</html>

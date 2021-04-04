@@ -1,13 +1,4 @@
-@font-face {
-    font-family: 'Hammerhead';
-    src: url("../fonts/HammerheadRegular.ttf");
-  }
-  
-  @font-face {
-    font-family: 'Hammerhead_Bold';
-    src: url("../fonts/HammerheadBold.ttf");
-  }
-  
+ 
   @font-face {
     font-family: 'Neuropol';
     src: url("../fonts/Neuropol.ttf");
@@ -20,6 +11,8 @@
   
   body {
     height: 100vh;
+    color: #1ce8ff;
+    font-family: 'Neuropol';
   }
   
   html {
@@ -135,6 +128,17 @@
     border-top-right-radius: 7px;
     font-family: "Neuropol", sans-serif;
   }
+
+  .overlay{
+    position:absolute; 
+    bottom:0; 
+    background: #1ce8ff;
+    color: rgba(13, 14, 48, 0.95);
+    width:100%;
+    height:50px;
+    padding-top: 10px;
+    text-align: center;
+  }
   
   .login_header h1 {
     margin-top: 35px;
@@ -159,6 +163,8 @@
     padding: 5px 10px 5px 10px;
     color: #1ce8ff;
   }
+
+
   
   input[type="submit"]:hover {
     -webkit-transition: 0.2s;

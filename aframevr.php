@@ -2,6 +2,8 @@
 require 'config/config.php';
 include("includes/classes/User.php");
 include("includes/classes/Post.php");
+include("includes/classes/Message.php");
+include("includes/classes/Notification.php");
 
 if (isset($_SESSION['username'])) {
     $userLoggedIn = $_SESSION['username'];
@@ -11,52 +13,81 @@ if (isset($_SESSION['username'])) {
     header("Location: register.php");
 }
 $username = $_GET['profile_username'];
-$user_room_query =  mysqli_query($con,"SELECT * FROM users WHERE username='$username'");
+$user_room_query =  mysqli_query($con, "SELECT * FROM users WHERE username='$username'");
 $user_room_values = mysqli_fetch_array($user_room_query);
+$post_obj = new Post($con, $userLoggedIn);
+$logged_in_user_obj = new User($con, $userLoggedIn);
+$message_obj = new Message($con, $userLoggedIn);
 
+$user_vrroom_query = mysqli_query($con, "SELECT * FROM vr_room WHERE username='$username' AND user_closed='no'");
+$user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
 ?>
 
 <html>
 
 <head>
+    <link rel="stylesheet" href="assets/css/styleVR.css">
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+
+    <!-- ALL IMPORTED COMPONENTS USE THE MIT LICENCE UNLESS OTHERWISE STATED -->
+
+    <!-- Need to include the script for event-set components - created by Kevin Ngo-->
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+
+    <!--Look-At component script - created by Kevin Ngo-->
+    <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+
+    <!-- Super hands for controller-based interactions - created by Will Murphy-->
+    <script src="https://unpkg.com/super-hands@^3.0.1/dist/super-hands.min.js"></script>
+
+    <!-- Super hands file, modify this to personalise cursor behaviour and color - created by Will Murphy-->
+    <script src="assets/js/progressive-controls.js"></script>
+
+    <!-- A-Frame-extras script for auto-recognised movement controls - created by Don McCrudy-->
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v4.1.2/dist/aframe-extras.min.js"></script>
+
+    <!-- A-Frame navigation mesh plugin - adds collision options and restricts movement - created by Don McCrudy-->
+    <!-- Will be fully implemented when the developers update it to A-Frame 1.2.0 -->
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+
+    <!-- A-Frame Blink Controls for moving around the scene in VR - created by Jure -->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
+
+    <!-- A-Frame speech recognition component - created by Leonardo Malave-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.5.0/annyang.min.js"></script>
+    <script src="assets/js/aframe-speech-command-component.js"></script>
+    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+
+
+    <!--HTML embed component makes using HTML tags usable in A-Frame environment - created by Paul Brunt-->
+    <script src="assets/js/htmlembed.js"></script>
+    <script src="assets/js/vrscript.js"></script>
+
+
+    <script>
+        //appending all messages to the scene at start   
+        function loadAll() {
+            var userLoggedIn = '<?php echo $userLoggedIn; ?>';
+            $.ajax({
+                url: "includes/handlers/ajax_vr_load_messages.php",
+                type: "POST",
+                data: "&userLoggedIn=" + userLoggedIn,
+                cache: false,
+
+                success: function(response) {
+                    $('#message-plane').append(response);
+                },
+            });
+        }
+        loadAll();
+    </script>
 </head>
 
 <body>
-<<<<<<< Updated upstream
-    <a-scene>
-        <?php
-
-        if ($username != $userLoggedIn) { ?>
-            <a-box position="-1 5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-        <?php } ?>
-        <a-entity text="value: <?php echo $user_room_values['first_name'] . " " . $user_room_values['last_name'] . "'s Room"; ?>; color: #000" position="1 3 -3" scale="4 4 4"></a-entity>
-        <?php
-        $result = mysqli_query($con, "SELECT * FROM users");
-
-        if (mysqli_num_rows($result) > 0) {
-            // output data of each row
-            while ($row = mysqli_fetch_assoc($result)) {
-                $i = 0; ?>
-                <a-entity id="aframe_entries_<?php echo $row['id']; ?>" text="value:
-                                    <?php
-                                    echo "id: " . $row["id"] . " - Name: " . $row["username"] . "<br>";
-                                    ?>; color: #000" <?php if ($row['id'] == 1) {
-                                                            echo 'position="-0.9 1.2 -3"';
-                                                        } else {
-                                                            echo 'position="-0.9 2 -3"';
-                                                        } ?> scale="1.5 1.5 1.5"></a-entity>
-        <?php
-            }
-        }   ?>
-
-        <a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>
-        <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-        <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
-        <a-plane position="0 0 -4" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-        <a-sky color="#ECECEC"></a-sky>
-    </a-scene>
-=======
     <div id="slide2" class="slide">
         <div id="slide3" class="slide">
             <div id="slide4" class="slide">
@@ -114,6 +145,7 @@ $user_room_values = mysqli_fetch_array($user_room_query);
                         </a-entity>
                         <!-- Room - bigboy-->
                         <a-entity position="0 0 0" gltf-model="#bigboy">
+                            
                         </a-entity>
                         <!-- Room - record-->
                         <a-entity scale="0.01 0.01 0.01" position="0 0 0" gltf-model="#record">
@@ -349,7 +381,6 @@ $user_room_values = mysqli_fetch_array($user_room_query);
             </div>
         </div>
     </div>
->>>>>>> Stashed changes
 </body>
 
 </html>

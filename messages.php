@@ -84,3 +84,5 @@ if (isset($_POST['post_message'])) {
     <br>
     <a href="messages.php?u=new">New Message</a>
 </div>
+</body>
+</html>

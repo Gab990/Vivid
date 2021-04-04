@@ -22,7 +22,9 @@ if(isset($_POST['close_account'])){
 
     <form action="close_account.php" method="POST">
         <input type="submit" name="close_account" id="close_account" class="danger settings_submit" value="Yes! Close my account">
-        <input type="submit" name="cancel" id="update_details" class="info settings_submit" value="No way!">
+        <input type="submit" name="cancel" id="update_details" class="info settings_submit" value="No, thanks!">
     </form>
 
 </div>
+</body>
+</html>

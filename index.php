@@ -11,22 +11,17 @@ if (isset($_POST['post'])) {
     if ($imageName != "") {
         $targetDir = "assets/images/posts/";
         //to ensure no 2 images have the same name
-        $imageName = $targetDir . uniqid() . basename($imageName);
+        $imageName = $targetDir . $userLoggedIn . uniqid() . basename($imageName);
         $imageFileType = pathinfo($imageName, PATHINFO_EXTENSION);
 
-        if ($_FILES['fileToUpload']['size'] > 10000000) {
-            $errorMessage = "Sorry, your file is too large";
+        if ($_FILES['fileToUpload']['size'] > 20000000) {
+            $errorMessage = "Sorry, your file is too large, max filesize is 2.5MB";
             $uploadOk = 0;
         }
 
-<<<<<<< Updated upstream
-        if((strtolower($imageFileType) != "jpeg") && (strtolower($imageFileType) != "png") && (strtolower($imageFileType) != "jpg")) {
-            $errorMessage = "Sorry, only .jpeg, .jpg and .png files are allower";
-=======
         if ((strtolower($imageFileType) != "jpeg") && (strtolower($imageFileType) != "png") && (strtolower($imageFileType) != "jpg")) {
 
             $errorMessage = "Sorry, only .jpeg, .jpg and .png files are allowed!" . $imageFileType;
->>>>>>> Stashed changes
             $uploadOk = 0;
         }
 
@@ -48,10 +43,6 @@ if (isset($_POST['post'])) {
             $errorMessage
         </div>";
     }
-<<<<<<< Updated upstream
-    header("Location: index.php");
-=======
->>>>>>> Stashed changes
 }
 ?>
 <div class="user_details column">
@@ -71,7 +62,7 @@ if (isset($_POST['post'])) {
     </div>
 </div>
 
-<div class="main_column column">
+<div class="main_column column ">
     <form class="post_form" action="index.php" method="POST" enctype="multipart/form-data">
         <input type="file" name="fileToUpload" id="fileToUpload" hidden>
         <label id="sharePicButton" for="fileToUpload">Share a Pic!</label>
@@ -92,7 +83,7 @@ if (isset($_POST['post'])) {
     </form>
 
     <div class="posts_area"></div>
-    <img src="assets/images/icons/loading.gif" alt="loading icon" id="loading" width="50" height="50">
+    <img src="assets/images/icons/loading.gif" alt="loading icon" id="loading" width="100" height="100">
 </div>
 
 
@@ -204,6 +195,6 @@ if (isset($_POST['post'])) {
 </script>
 
 </div>
-</body>
-
-</html>
+<?php
+include("includes/footer.php");
+?>

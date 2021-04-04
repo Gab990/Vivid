@@ -15,11 +15,14 @@
 
 html{
     height:100%;
+    
 }
 
 body {
     height:100%;
     line-height: 17px;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 0.9rem;
 }
 
 a {
@@ -32,6 +35,17 @@ hr{
     background: linear-gradient(to right, #662d91, rgba(28, 232, 255, 0.3));
     height:2px;
     border:none;
+}
+
+
+.footer{
+    margin-top: 150px !important;
+    width:60% !important;
+    text-align: center;
+    margin-right: 20%;
+    border-bottom: none !important;
+    border-bottom-left-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
 }
 
 
@@ -136,7 +150,6 @@ nav a {
     width: 68%;
     z-index: -1;
     min-height: 170px;
-    margin-bottom:20px;
 }
 
 .post_form {
@@ -267,23 +280,16 @@ textarea:focus {
 }
 
 .profile_left {
-    top: -10px;
     width: 17%;
     max-width: 240px;
     min-width: 130px;
-    height: 100vh;
+    height: 110vh;
     float: left;
-<<<<<<< Updated upstream
-    position: relative;
-    background-color: #2ecc71;
-    border-right: 10px solid #56eb94;
-=======
     position: fixed;
     padding-top: 50px;
     top:-10px;
     background-color: rgba(13, 14, 48, 0.95);
     border-right: 10px solid #65dbeb;
->>>>>>> Stashed changes
     color: #CBEAF8;
     margin-right: 20px;
 }
@@ -301,11 +307,7 @@ textarea:focus {
     display: list-item;
     width: 100%;
     padding: 10px 0 10px 0;
-}
-
-#vrRoomButton{
-    margin-left:5px;
-    margin-top:20px;
+    text-align: center;
 }
 
 .sidebar_scroll {
@@ -360,7 +362,6 @@ textarea:focus {
   }
 
 .profile_info p {
-    margin: 0 0 0 20px;
     word-wrap: break-word;
 }
 
@@ -389,13 +390,15 @@ textarea:focus {
 }
 
 .profile_left input[type="submit"] {
-    width: 92%;
+    width: 80%;
+    margin-left:7%;
     height: 30px;
     border-radius: 5px;
-    margin: 7px 0 0 7px;
     border: none;
     color: #fff;
+    margin-bottom:20px;
 }
+
 
 #accept_button {
     width: 20%;
@@ -432,6 +435,7 @@ textarea:focus {
     float: left;
     width: 70%;
     z-index: -1;
+    margin-left: 35%
 }
 
 .profile_info_bottom {
@@ -725,9 +729,6 @@ textarea:focus {
     max-width: 100%;
     display:block;
     margin: 5px auto;
-<<<<<<< Updated upstream
-}
-=======
 }
 
 .delReq {
@@ -791,7 +792,7 @@ img.profilePicSmall{
   
   .top_bar {
     width: 100%;
-    min-width: 1050px;
+    /* min-width: 1050px; */
     height: 50px;
     background-color: rgba(13, 14, 48, 0.95);
     margin: 0;
@@ -918,4 +919,24 @@ input[type="submit"]:hover {
 }
 
   /*# sourceMappingURL=header.css.map */
->>>>>>> Stashed changes
+
+
+
+  /*MEDIA QUERIES!!!!!*/
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
