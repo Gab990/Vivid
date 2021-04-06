@@ -51,6 +51,8 @@
   
   img {
     opacity: 0.5;
+    padding-top: 15%;
+    justify-self: center;
   }
   
   #circle {
@@ -95,7 +97,7 @@
   .regWrapper {
     width: 100%;
     height: 100vh;
-    min-width: 950px;
+    min-width: fit-content;
     position: absolute;
     z-index: 10;
     display: -ms-grid;
@@ -108,7 +110,7 @@
   }
   
   .login_box {
-    min-width: 415px;
+    min-width: 320px;
     max-width: 570px;
     border: 1px solid #1ce8ff;
     border-radius: 7px;
@@ -117,6 +119,7 @@
     display: -ms-grid;
     display: grid;
     background-color: #0d0e30;
+    height: 600px;
   }
   
   .login_header {
@@ -223,4 +226,104 @@
   #second {
     display: none;
   }
+  a#signup {
+    padding-bottom: 5px;
+  }
   /*# sourceMappingURL=register.css.map */
+
+@media screen and (min-width:320px) and (max-device-width: 480px)  { 
+  .login_box {
+    min-width: 320px;
+    max-width: 570px;
+    border: 1px solid #1ce8ff;
+    border-radius: 7px;
+    -webkit-box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+            box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+    display: -ms-grid;
+    display: grid;
+    background-color: #0d0e30;
+    height: 99vh;
+    width: 99vw;
+  }
+  #first, #second {
+    min-height: 45vh;
+    padding: 1%;
+  }
+}
+@media (min-device-width:481px) and (max-device-width: 640px) {
+   /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+  .login_box {
+    min-width: 99vw;
+    border: 1px solid #1ce8ff;
+    border-radius: 7px;
+    -webkit-box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+            box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+    display: -ms-grid;
+    display: grid;
+    background-color: #0d0e30;
+    height: 100vh;
+  }
+  #first, #second {
+    min-height: 40vh;
+    padding: 1%;
+    }
+  }
+    @media (min-device-width:641px) and (max-device-width: 960px) {
+   /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+  .login_box {
+    min-width: 99vw;
+    max-width: 570px;
+    border: 1px solid #1ce8ff;
+    border-radius: 7px;
+    -webkit-box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+            box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+    display: -ms-grid;
+    display: grid;
+    background-color: #0d0e30;
+    height: 100vh;
+  }
+  #first, #second {
+    padding-top: 10vh;
+    min-height: 40vh;
+    padding: 5vh auto;
+
+    }
+  }
+
+@media (min-device-width:961px) and (max-device-width: 1280px) {
+   /* If custom layout needs to be added for specific devices such as tablets */
+   .regWrapper {
+     width: 100vw;
+     height: 100vh;
+   }
+      .login_box {
+    min-width: 320px;
+    max-width: 570px;
+    border: 1px solid #1ce8ff;
+    border-radius: 7px;
+    -webkit-box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+            box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+    display: -ms-grid;
+    display: grid;
+    background-color: #0d0e30;
+  }
+  #first, #second {
+    padding: 1%;
+    }
+  }
+@media (min-width:1281px) {
+   .login_box {
+    min-width: 320px;
+    max-width: 570px;
+    border: 1px solid #1ce8ff;
+    border-radius: 7px;
+    -webkit-box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+            box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 80px #1ce8ff, 0 0 10px #1ce8ff;
+    display: -ms-grid;
+    display: grid;
+    background-color: #0d0e30;
+  }
+  #first, #second {
+    padding: 1%;
+  }
+  }

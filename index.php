@@ -91,7 +91,7 @@ if (isset($_POST['post'])) {
 </div>
 
 
-<div class="user_details column">
+<div class="user_details column" id="trends">
 
     <h4>Popular terms</h4>
     <hr>
@@ -115,8 +115,8 @@ if (isset($_POST['post'])) {
 </div>
 
 
-<div class="user_details column">
-    <h4>Current version 0.8 <br> Open-beta version</h4>
+<div class="user_details column" id="dev_data_ver">
+    <h4 style="text-align: center;">Current version 0.8 <br> Open-beta version</h4>
     <hr>
     <h4>Version details:</h4>
     <ul>

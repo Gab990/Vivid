@@ -11,7 +11,7 @@ require 'includes/form_handlers/login_handler.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/register_style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/register_style.css?v=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src='assets/js/lib/Tween.min.js' defer></script>
     <script src="assets/js/lib/perlin.js" defer></script>
@@ -19,7 +19,6 @@ require 'includes/form_handlers/login_handler.php';
 	<script src="assets/js/lib/three.js" defer></script>
     <script src="assets/js/lib/GLTFLoader.js" defer></script>
 	<script src="assets/js/lib/OrbitControls.js" defer></script>
-    <script src="assets/js/3d.js" defer></script>
     <script src="assets/js/regcanvas.js" defer></script>
     <script src="assets/js/register.js"></script>
 </head>
@@ -44,7 +43,7 @@ require 'includes/form_handlers/login_handler.php';
     <div class="wrapper">
 
         <div class="login_box">
-        <img width="200" height="200" style="position:absolute;top:10%;" src="assets/images/icons/logo.png">
+        <img width="150" height="150" src="assets/images/icons/logo.png">
             <div class="login_header">            
                 <h1>Vivid</h1>
                 <p>Login to your account</p>

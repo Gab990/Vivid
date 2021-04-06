@@ -102,7 +102,6 @@ nav a {
     -webkit-box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 30px #1ce8ff, 0 0 10px #1ce8ff;
             box-shadow: 0 0 2px #1ce8ff, 0 0 4px #1ce8ff, 0 0 30px #1ce8ff, 0 0 10px #1ce8ff;
     background-color: rgba(13, 14, 48, 0.95);
-    padding: 10px;
     z-index:-1;
 }
 
@@ -126,8 +125,7 @@ nav a {
 
 .user_details img {
     height: 125px;
-    border-radius: 5px;
-    margin-right: 5px;
+    border-radius: 50%;
 }
 
 #bgImage{
@@ -306,9 +304,12 @@ textarea:focus {
     padding-top: 50px;
     top:-10px;
     background-color: rgba(13, 14, 48, 0.95);
-    border-right: 10px solid #65dbeb;
+    border-right: 1px solid #65dbeb;
     color: #CBEAF8;
     margin-right: 20px;
+    -webkit-box-shadow: 0 0 10px #1ce8ff, 0 0 40px #1ce8ff, 0 0 10px #1ce8ff, 0 0 10px #1ce8ff;
+            box-shadow: 0 0 10px #1ce8ff, 0 0 40px #1ce8ff, 0 0 10px #1ce8ff, 0 0 10px #1ce8ff;
+
 }
 
 .profile_left img {
@@ -633,7 +634,7 @@ textarea:focus {
 }
 
 .search{
-    margin: 6px 0 0 0;
+    margin: 8px 0 0 10px;
 }
 
 #search_text_input{
@@ -641,9 +642,7 @@ textarea:focus {
     float:left;
     outline: 0;
     height:23px;
-    width:100px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+    width:auto;
 }
 
 .button_holder{
@@ -860,10 +859,9 @@ img.profilePicSmall{
   }
   
   nav {
-    float: right;
-    right: 1px;
-    position: absolute;
-    margin: 10px;
+    position: relative;
+    top: 10px;
+    left: 13vw;
   }
   
   nav a {
@@ -921,6 +919,7 @@ input[type="submit"], input[type="email"], input[type="password"], input[type="t
     border-radius: 5px;
     padding: 5px 10px 5px 10px;
     color: #1ce8ff;
+    font-family: 'Neuropol';
   }
 
 input[type="submit"]:hover {
@@ -946,28 +945,366 @@ input[type="submit"]:hover {
     .sm-hidden{
         display:none;
     }
+    .top_bar {
+        width: 100vw;
+        height: 5vh;
+    }
+
+    nav {
+        margin: 0;
+        top:0;
+    }
+
+    nav a {
+        display: inline-block;
+        /* width: 100vw; */
+        padding: 5px;
+    }
+    .user_details {
+        display: none;
+
+    }
+    .wrapper {
+        max-width: 100vw;
+        width: 99vw;
+        min-width: 0;
+        padding: 0;
+    }
+    .main_column.column {
+        display: block;
+        width: 99vw !important;
+        max-width: 600px;
+        box-sizing: border-box;
+        padding: 5px;
+        margin: 0 auto;
+        height: 55vh;
+        overflow: scroll;
+        overflow-y: overlay;
+    }
+    .post_form textarea {
+    width: 70vw;
+    box-sizing: border-box;
+    }
+    .profile_left {
+        height: 100vh;
+    }
+    .profile_left.deep_blue, .profile_left input[type="submit"], a button#vrRoomButton {
+        font-size: 0.6em;
+        border:#1ce8ff 1px solid;
+    }
+    .dropdown_data_window{
+        width: 99vw;
+        top: 5vh;
+        left: 1px;
+    }
+    .profile_main_column {
+        min-width: 0;
+        width: 59vw;
+        margin-left: 40%;
+        
+    }
+    #scroll_messages {
+        height: auto;
+    }
+    #message_textarea {
+        width: 50vw;
+        position: relative;
+    }
+    #message_submit {
+        height: 30px;
+        position: relative;
+        border: 1px solid #1ce8ff;
+    }
+    .post_form input[type="submit"] {
+        width: 16vw;
+        height: 5vh;
+        text-align: center;
+        position: relative;
+        top: -5px;
+    }
+    .footer.main_column{
+        display: none;
+    }
+    .sidebar_scroll {
+        display: none;
+    }
+    .profile_left input[type="submit"]{
+        width: 70%;
+    }
+
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {}
 
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+    .sm-hidden{
+        display:none;
+    }
     .md-hidden{
         display:none;
     }
+    div.logo.col-md-1.span1 {
+        display: none;
+    }
+    .top_bar {
+        width: 100vw;
+        height: 9vh;
+    }
+    #dev_data_ver {
+        display: none !important;
+    }
+    nav {
+        margin: 0;
+    }
+
+    nav a {
+        display: inline-block;
+    }
+    .user_details {
+        display: none;
+    }
+    .column#dev_data_ver {
+    display: none;
+    }
+
+    .wrapper {
+        max-width: 100vw;
+        width: 99vw;
+        min-width: 0;
+        padding: 0;
+    }
+    .main_column {
+        clear: both;
+    }
+    .main_column.column {
+        display: block;
+        width: 99vw !important;
+        box-sizing: border-box;
+        padding: 5px;
+        margin: 0 auto;
+        height: 35vh;
+        overflow: scroll;
+        overflow-y: overlay;
+    }
+    .post_form textarea {
+    width: 70vw;
+    box-sizing: border-box;
+    }
+    .profile_left {
+        height: 100vh;
+    }
+    .profile_left.deep_blue, .profile_left input[type="submit"], a button#vrRoomButton {
+        font-size: 0.6em;
+        border:#1ce8ff 1px solid;
+    }
+    .dropdown_data_window{
+        width: 100vw;
+        top: 9vh;
+        left: 13vw;
+    }
+    .profile_main_column {
+        min-width: 0;
+        width: 59vw;
+        margin-left: 30%;
+    }
+    #scroll_messages {
+        height: auto;
+    }
+    #message_textarea {
+        width: 50vw;
+        position: relative;
+    }
+    #message_submit {
+        height: 30px;
+        position: relative;
+        border: 1px solid #1ce8ff;
+    }
+    .post_form input[type="submit"] {
+        width: 16vw;
+        height: 10vh;
+        text-align: center;
+        position: relative;
+        top: -5px;
+        right: -3vw;
+    }
+    .footer.main_column{
+        display: none;
+    }
+    .sidebar_scroll {
+        display: none;
+    }
+    .profile_left input[type="submit"]{
+        width: 70%;
+    }
+    .column#dev_data_ver {
+    display: none;
+    }
+
 }
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) and (max-device-width: 992px){
+    .sm-hidden {
+        display: block;
+    }
+    .md-hidden{
+        display:block;
+    }
+    div.logo.col-md-1.span1 {
+        display: block;
+        padding-right: 5px;
+        padding-bottom: 5px;
+    }
+    .user_details {
+        display: flex;
+        flex-direction: column;
+        width: 20vw;
+        height: 20vh;
+        overflow-y: scroll;
+    }
+    .user_details_left_right {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        margin: 1vh 1vw;
+        padding: 1%;
+    }
+    .user_details.column {
+        height: auto;
+        max-height: 21vh;
+        padding: 1%;
+    }
+    .user_details.column img {
+        margin: 5px auto;
+    }
+    .user_details.column a{
+        border-radius: 50%;
+    }
+    .user_details.column h4{
+        text-align: center;
+    }
+    #trends {
+        position: absolute;
+        left: 1px;
+        top:25vh;
+        height: 20vh;
+        display: none;
+    }
+    .column#dev_data_ver {
+    display: none;
+    }
+
+    #conversations{
+        position: absolute; 
+        left: 0px;
+        /* padding: 1%; */
+        top: 23vh;
+    }
+    .top_bar {
+        width: 100vw;
+        height: 5vh;
+        line-height: 10px;
+    }
+
+    nav {
+        margin: 0;
+        left:0;
+    }
+    .dropdown_data_window {
+        top:5vh;
+    }
+
+    nav a {
+        line-height: 15px;
+
+    }
+    .wrapper {
+        max-width: 100vw;
+        width: 99vw;
+        min-width: 0;
+        padding: 0;
+    }
+    .main_column.column {
+        float: right;
+        max-width: 580px;
+        box-sizing: border-box;
+        padding: 5px;
+        margin: 0 auto;
+        height: 60vh;
+        overflow: scroll;
+        overflow-x: hidden;
+        overflow-y: overlay;
+        position:absolute;
+        top: 0vh;
+        left: 23vw;
+    }
+    .post_form textarea {
+    width: 60vw;
+    box-sizing: border-box;
+    }
+    .profile_left {
+        height: 100vh;
+    }
+    .profile_left.deep_blue, .profile_left input[type="submit"], a button#vrRoomButton {
+        font-size: 0.6em;
+        border:#1ce8ff 1px solid;
+    }
+    .dropdown_data_window{
+        width: 99vw;
+        top: 4vh;
+        left: 1vw;
+        box-shadow: 0 0 0 #1ce8ff, 0 0 20px #1ce8ff, 0 0 10px #1ce8ff, 0 0 10px #1ce8ff;
+    }
+    .profile_main_column {
+        min-width: 0;
+        width: 75vw;
+        margin-left: 20vw;
+    }
+    #scroll_messages {
+        height: auto;
+    }
+    #message_textarea {
+        width: 52vw;
+        position: relative;
+        left: 1vw;
+    }
+    #message_submit {
+        height: 3vh;
+        position: relative;
+        border: 1px solid #1ce8ff;
+        width: 85px;
+        left:10px;
+        top:-6px;
+    }
+    .post_form input[type="submit"] {
+        width: 8vw;
+        height: 3vh;
+        text-align: center;
+        position: relative;
+        top: -5px;
+        right: -2vw;
+    }
+    .footer.main_column{
+        display: none;
+    }
+    .sidebar_scroll {
+        display: none;
+    }
+    .profile_left input[type="submit"]{
+        width: 70%;
+    }
+    
+}
+
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-    .lg-hidden{
-        display:none;
-    }
+    
 }
 
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-    .xl-hidden{
+    /* .xl-hidden{
         display: none;
-    }
+    } */
 }
