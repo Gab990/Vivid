@@ -92,7 +92,7 @@ if (isset($_POST['post'])) {
 </div>
 
 
-<div class="user_details column">
+<div class="user_details column" id="trends">
 
     <h4>Popular terms</h4>
     <hr>

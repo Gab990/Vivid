@@ -11,7 +11,7 @@ require 'includes/form_handlers/login_handler.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" type="text/css" href="assets/css/register_style.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/register_style.css?v=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src='assets/js/lib/Tween.min.js' defer></script>
     <script src="assets/js/lib/perlin.js" defer></script>
@@ -69,10 +69,7 @@ require 'includes/form_handlers/login_handler.php';
             $("#first").hide();
             $("#second").show();
         });
-
-
-        </script>
-        ';
+        </script>';
             }
             ?>
             <div class="wrapper">

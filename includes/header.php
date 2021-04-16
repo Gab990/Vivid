@@ -61,10 +61,10 @@ if (isset($_SESSION['username'])) {
 <body>
     <div class="container-fluid">
 
-        <div class="top_bar row-fluid">
-            <div class="logo col-md-1">
-                <a style="margin:0;padding:0" href="index.php"><img width="45" height="45" style="padding-top:2px;padding-left:50px;" src="assets/images/icons/logo.png"></a>
-            </div>
+    <div class="top_bar row-fluid">
+        <div class="logo col-md-1 span1">
+            <a style="margin:0;padding:0" href="index.php"><img width="45" height="45" style="padding-top:5px;padding-left:5px;" src="assets/images/icons/logo.png"></a>
+        </div>
 
 
             <div class="search sm-hidden">
