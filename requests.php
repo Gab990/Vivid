@@ -15,13 +15,18 @@ else {
     <h4>Friend List</h4>
 <?php
     $user2_obj = new User($con, $username);
-    foreach($user2_obj->getFriendsList() as $friend2) {
+    $friends = $user2_obj->getFriendsList();
+    if($friends){
+    foreach($friends as $friend2) {
         $friend2_obj = new User($con, $friend2);
         echo "<a href='$friend2'>
         <img class='profilePicSmall' src='" . $friend2_obj->getProfilePic() ."'>"
         . $friend2_obj->getFirstAndLastName() . 
         "</a>
         <br>";
+    }}
+    else {
+        echo "You have not added any friends yet, do so by searching for them!";
     }
 ?>
 </div>

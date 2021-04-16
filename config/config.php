@@ -4,7 +4,7 @@ session_start();
 
 $timezone = date_default_timezone_set("Europe/London");
 
-$con=mysqli_connect("localhost","root", "", "social");
+$con=mysqli_connect("localhost","u537209177_gsebesty1990SA", "aErBit3R%5", "u537209177_social");
 
 
 if(mysqli_connect_errno()){

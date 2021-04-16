@@ -36,7 +36,7 @@ if (isset($_SESSION['username'])) {
     }
     form{
     position:absolute;
-    top:3px;
+    top:-2px;
     }
     input[type="submit"]:hover{
     -webkit-transition: 0.2s;

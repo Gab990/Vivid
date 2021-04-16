@@ -29,7 +29,7 @@ else{
 </div>
 
 <div class="main_column column" id="main_column">
-    <div class="posts_area">
+    <div class="posts_area"><br><br>
         <?php
             $post = new Post($con,$userLoggedIn);
             $post->getSinglePost($id);

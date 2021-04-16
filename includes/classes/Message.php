@@ -31,13 +31,12 @@ class Message
 
     public function sendMessage($user_to, $body, $date)
     {
-        if($body == "https://wooded-darkened-gauge.glitch.me/"){
+        if ($body == "https://wooded-darkened-gauge.glitch.me/") {
             $userLoggedIn = $this->user_obj->getUsername();
-            $body2 = $body."?room=".$user_to."&username=".$user_to;
+            $body2 = $body . "?room=" . $user_to . "&username=" . $user_to;
             $query = mysqli_query($this->con, "INSERT INTO messages VALUES('','$user_to','$userLoggedIn','$body2','$date','no','no','no')");
-        }
-        else if ($body != "") {
-            $body=strip_tags($body);
+        } else if ($body != "") {
+            $body = strip_tags($body);
             $userLoggedIn = $this->user_obj->getUsername();
             $query = mysqli_query($this->con, "INSERT INTO messages VALUES('','$user_to','$userLoggedIn','$body','$date','no','no','no')");
         }
@@ -57,19 +56,17 @@ class Message
             $user_to = $row['user_to'];
             $user_from = $row['user_from'];
             $body = $row['body'];
-            if(strpos($body, "https://wooded-darkened-gauge.glitch.me/") !== false){
-                $div_top="<div class='message vrCallMessage' id='grey' style='width:80%;margin-left:10%;'>";
-                $body="<a href='".$body."' target='_blank'>VR CALL</a>";
+            if (strpos($body, "https://wooded-darkened-gauge.glitch.me/") !== false) {
+                $div_top = "<div class='message vrCallMessage' id='grey' style='width:80%;margin-left:10%;'>";
+                $body = "<a href='" . $body . "' target='_blank'>VR CALL</a>";
+                $data = $data . $div_top . $body . "</div><br><br>";
+            } else {
+                $div_top = ($user_to == $userLoggedIn) ? "<div class='message' id='green'>" : "<div class='message' id='blue'>"; //conditional statement - equals to if statement. Depending whether  statement in parenthesis is true divtop equals the value before the colon, else it equals to the one after
                 $data = $data . $div_top . $body . "</div><br><br>";
             }
-            else{
-            $div_top = ($user_to == $userLoggedIn) ? "<div class='message' id='green'>" : "<div class='message' id='blue'>"; //conditional statement - equals to if statement. Depending whether  statement in parenthesis is true divtop equals the value before the colon, else it equals to the one after
-            $data = $data . $div_top . $body . "</div><br><br>";
         }
-        }
-        
+
         return $data;
-        
     }
 
     public function getLatestMessage($userLoggedIn, $user2)
@@ -205,18 +202,18 @@ class Message
         return $return_string;
     }
 
-    public function getConvosDropdown($data, $limit){
+    public function getConvosDropdown($data, $limit)
+    {
 
         $page = $data['page'];
         $userLoggedIn = $this->user_obj->getUsername();
         $return_string = "";
         $convos = array();
 
-        if($page == 1){
+        if ($page == 1) {
             $start = 0;
-        }
-        else{
-            $start = ($page-1) * $limit;
+        } else {
+            $start = ($page - 1) * $limit;
         }
 
 
@@ -232,23 +229,22 @@ class Message
             }
         }
 
-        $num_iterations=0; //number of messages checked
+        $num_iterations = 0; //number of messages checked
         $count = 1; //number of messages posted
 
         foreach ($convos as $username) {
 
-            if($num_iterations++ < $start){ //first increase, then continue
+            if ($num_iterations++ < $start) { //first increase, then continue
                 continue;
             }
 
-            if($count > $limit){
+            if ($count > $limit) {
                 break;
-            }
-            else{
+            } else {
                 $count++;
             }
 
-            $is_unread_query = mysqli_query($this->con,"SELECT opened FROM messages WHERE user_to='$userLoggedIn' AND user_from='$username' ORDER BY id DESC");
+            $is_unread_query = mysqli_query($this->con, "SELECT opened FROM messages WHERE user_to='$userLoggedIn' AND user_from='$username' ORDER BY id DESC");
             $row = mysqli_fetch_array($is_unread_query);
             $style = (isset($row['opened']) && $row['opened'] == 'no') ? "background-color: #DDEDFF;" : ""; //conditional statement
 
@@ -269,17 +265,25 @@ class Message
 
         //if posts were loaded
 
-        if($count > $limit){
-            $return_string .= "<input type='hidden' class='nextPageDropdownData' value='" . ($page + 1) ."'><input type='hidden' class='noMoreDropdownData' value='false'>";
-        }
-        else
-        $return_string .= "<input type='hidden' class='noMoreDropdownData' value='true'> <p style='text-align:center;'>No more messages to load!</p>";
+        if ($count > $limit) {
+            $return_string .= "<input type='hidden' class='nextPageDropdownData' value='" . ($page + 1) . "'><input type='hidden' class='noMoreDropdownData' value='false'>";
+        } else
+            $return_string .= "<input type='hidden' class='noMoreDropdownData' value='true'> <p style='text-align:center;'>No more messages to load!</p>";
         return $return_string;
     }
 
-    public function getUnreadNumber() {
+    public function getUnreadNumber()
+    {
         $userLoggedIn = $this->user_obj->getUsername();
-        $query = mysqli_query($this->con,"SELECT * FROM messages WHERE viewed='no' AND user_to='$userLoggedIn'");
-        return mysqli_num_rows($query); //will return the number of unread messages - is used in the header for the messages badge
+        $query = mysqli_query($this->con, "SELECT * FROM messages WHERE viewed='no' AND user_to='$userLoggedIn'");
+
+        $senders = array();
+
+        while ($row = mysqli_fetch_array($query)) {
+
+            array_push($senders, $row['user_from']);
+        }
+
+        return count(array_unique($senders));
     }
 }

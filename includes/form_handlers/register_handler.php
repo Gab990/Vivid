@@ -106,57 +106,30 @@ if(isset($_POST['register_button'])){
         }
 
         //assign profile picture
-        $rand = rand(1, 16); //random number between 1-16
+        $rand = rand(1, 7); //random number between 1-16
 
         switch($rand) {
             case 1: 
-                $profile_pic="assets/images/profile_pics/defaults/head_alizarin.png";
+                $profile_pic="assets/images/profile_pics/defaults/persona01.png";
                 break;
             case 2: 
-                $profile_pic="assets/images/profile_pics/defaults/head_amethyst.png";
+                $profile_pic="assets/images/profile_pics/defaults/persona02.png";
                 break;
             case 3: 
-                $profile_pic="assets/images/profile_pics/defaults/head_belize_hole.png";
+                $profile_pic="assets/images/profile_pics/defaults/persona03.png";
                 break;
             case 4:
-                $profile_pic="assets/images/profile_pics/defaults/head_carrot.png";
+                $profile_pic="assets/images/profile_pics/defaults/persona04.png";
                 break;
             case 5:
-                $profile_pic="assets/images/profile_pics/defaults/head_deep_blue.png";
+                $profile_pic="assets/images/profile_pics/defaults/persona05.png";
                 break;
             case 6:
-                $profile_pic="assets/images/profile_pics/defaults/head_emerald.png";
+                $profile_pic="assets/images/profile_pics/defaults/persona06.png";
                 break;
             case 7:
-                $profile_pic="assets/images/profile_pics/defaults/head_green_sea.png";
+                $profile_pic="assets/images/profile_pics/defaults/persona07.png";
                 break;
-            case 8:
-                $profile_pic="assets/images/profile_pics/defaults/head_nephritis.png";
-                break;
-            case 9:
-                $profile_pic="assets/images/profile_pics/defaults/head_pete_river.png";
-                break;
-            case 10:
-                $profile_pic="assets/images/profile_pics/defaults/head_pomegranate.png";
-                break;
-            case 11:
-                $profile_pic="assets/images/profile_pics/defaults/head_pumpkin.png";
-                break;
-            case 12:
-                $profile_pic="assets/images/profile_pics/defaults/head_red.png";
-                break;
-            case 13:
-                $profile_pic="assets/images/profile_pics/defaults/head_sun_flower.png";
-                break;
-            case 14:
-                $profile_pic="assets/images/profile_pics/defaults/head_turqoise.png";
-                break;
-            case 15:
-                $profile_pic="assets/images/profile_pics/defaults/head_wet_asphalt.png";
-                break;
-            case 16:  
-                $profile_pic="assets/images/profile_pics/defaults/head_wisteria.png";
-                break;  
             }
 
             $query = mysqli_query($con,"INSERT INTO users VALUES ('','$fname','$lname','$username','$em','$password','$date','$profile_pic','0','0','no',',')");

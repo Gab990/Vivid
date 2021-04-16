@@ -31,9 +31,6 @@ if (isset($_SESSION['username'])) {
             font-family: Arial, Helvetica, sans-serif;
             color: #1ce8ff;
         }
-
-
-        
     </style>
 
     <script>
@@ -65,29 +62,29 @@ if (isset($_SESSION['username'])) {
         $date_time_now = date("Y-m-d H:i:s");
         $insert_post = mysqli_query($con, "INSERT INTO comments VALUES ('','$post_body','$userLoggedIn','$posted_to','$date_time_now','no','$post_id')");
 
-        if($posted_to != $userLoggedIn){
+        if ($posted_to != $userLoggedIn) {
             $notification = new Notification($con, $userLoggedIn);
-            $notification->insertNotification($post_id,$posted_to,'comment');
+            $notification->insertNotification($post_id, $posted_to, 'comment');
         }
 
-        if($user_to != 'none' && $user_to != $userLoggedIn) {
+        if ($user_to != 'none' && $user_to != $userLoggedIn) {
             $notification = new Notification($con, $userLoggedIn);
-            $notification->insertNotification($post_id,$user_to,'profile_comment');
+            $notification->insertNotification($post_id, $user_to, 'profile_comment');
         }
 
         //notify all users who commented on a post
-        $get_commenters = mysqli_query($con,"SELECT * FROM comments WHERE post_id='$post_id'"); //all commenters
+        $get_commenters = mysqli_query($con, "SELECT * FROM comments WHERE post_id='$post_id'"); //all commenters
         $notified_users = array(); //array of all commenters
-        while($row=mysqli_fetch_array($get_commenters)){
+        while ($row = mysqli_fetch_array($get_commenters)) {
 
-            if(($row['posted_by'] != $posted_to) && ($row['posted_by'] != $user_to)
-                && ($row['posted_by'] != $userLoggedIn) && (!in_array($row['posted_by'], $notified_users))){
-                    $notification = new Notification($con, $userLoggedIn);
-                    $notification->insertNotification($post_id,$row['posted_by'],'comment_non_owner');
+            if (($row['posted_by'] != $posted_to) && ($row['posted_by'] != $user_to)
+                && ($row['posted_by'] != $userLoggedIn) && (!in_array($row['posted_by'], $notified_users))
+            ) {
+                $notification = new Notification($con, $userLoggedIn);
+                $notification->insertNotification($post_id, $row['posted_by'], 'comment_non_owner');
 
-                    array_push($notified_users,$row['posted_by']);
+                array_push($notified_users, $row['posted_by']);
             }
-
         }
 
         echo "<p>Comment Posted!</p>";
@@ -113,6 +110,30 @@ if (isset($_SESSION['username'])) {
             $posted_by = $comment['posted_by'];
             $date_added = $comment['date_added'];
             $removed = $comment['removed'];
+
+            $body_array = preg_split("/[ ]+|\n/", $comment_body);
+
+            foreach ($body_array as $key => $value) {
+
+                if (stripos($value, "www") !== false || stripos($value, "http") !== false) {
+
+                    if (stripos($value, "http://") === false && stripos($value, "https://") === false) {
+
+                        $value = "<a style='color:whitesmoke' target='_blank' href='https://" . strip_tags($body_array[$key]) . "' title='Click to go to link'>" . strip_tags($body_array[$key]) . "</a>";
+                        $body_array[$key] = $value;
+                    } else if (stripos($value, "http://") !== false) {
+
+                        $value = "<a style='color:whitesmoke' target='_blank' href='" . strip_tags($body_array[$key]) . "' title='Click to go to link'>" . strip_tags($body_array[$key]) . "</a>";
+                        $body_array[$key] = $value;
+                    } else if (stripos($value, "https://") !== false) {
+
+                        $value = "<a style='color:whitesmoke' target='_blank' href='" . strip_tags($body_array[$key]) . "' title='Click to go to link'>" . strip_tags($body_array[$key]) . "</a>";
+                        $body_array[$key] = $value;
+                    }
+
+                    $comment_body = implode(" ", $body_array);
+                }
+            }
 
             //get timeframe
             $date_time_now = date("Y-m-d H:i:s");
@@ -179,8 +200,7 @@ if (isset($_SESSION['username'])) {
     <?php
 
         }
-    }
-    else {
+    } else {
         echo "<center><br><br>No Comments to show!</center>";
     }
 

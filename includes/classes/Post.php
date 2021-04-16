@@ -19,58 +19,53 @@ class Post
         $body = str_replace('\r\n', "\n", $body);
         $body = nl2br($body);
 
-        $check_empty = preg_replace('/\s+/', '', $body); //deletes all spaces
+        //to embed youtube vids in posts
+        $body_array = preg_split("/\s+/", $body);
 
-        if ($check_empty != "") {
+        foreach ($body_array as $key => $value) {
 
-            //to embed youtube vids in posts
-            $body_array = preg_split("/\s+/", $body);
+            if (strpos($value, "www.youtube.com/watch?v=") !== false) {
 
-            foreach($body_array as $key => $value) {
-
-                if(strpos($value, "www.youtube.com/watch?v=") !== false){
-
-                    $link = preg_split("!&!",$value);
-                    $value = preg_replace("!watch\?v=!", "embed/", $link[0]);
-                    $value = "<br><iframe width=\'420\' height=\'315\' src=\'" . $value . "\' frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>";
-                    $body_array[$key] = $value; 
-                }
-
+                $link = preg_split("!&!", $value);
+                $value = preg_replace("!watch\?v=!", "embed/", $link[0]);
+                $value = "<br><iframe width=\'420\' height=\'315\' src=\'" . $value . "\' frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe><br>";
+                $body_array[$key] = $value;
             }
+        }
 
-            $body = implode(" ", $body_array);
+        $body = implode(" ", $body_array);
 
 
-            //current date and time
-            $date_added = date("Y-m-d H:i:s");
+        //current date and time
+        $date_added = date("Y-m-d H:i:s");
 
-            //get username
-            $added_by = $this->user_obj->getUsername();
+        //get username
+        $added_by = $this->user_obj->getUsername();
 
-            //if user_to is the user, set user_to to 'none'
-            if ($user_to == $added_by) {
-                $user_to = "none";
-            }
+        //if user_to is the user, set user_to to 'none'
+        if ($user_to == $added_by) {
+            $user_to = "none";
+        }
 
-            //insert post
+        //insert post
 
-            $query = mysqli_query($this->con, "INSERT INTO posts VALUES('','$body','$added_by','$user_to','$date_added','no', 'no', '0', '$imageName')");
-            $returned_id = mysqli_insert_id($this->con);
+        $query = mysqli_query($this->con, "INSERT INTO posts VALUES('','$body','$added_by','$user_to','$date_added','no', 'no', '0', '$imageName')");
+        $returned_id = mysqli_insert_id($this->con);
 
-            //insert notification
-            if ($user_to != 'none') {
-                $notification = new Notification($this->con, $added_by);
-                $notification->insertNotification($returned_id, $user_to, 'profile_post');
-            }
+        //insert notification
+        if ($user_to != 'none') {
+            $notification = new Notification($this->con, $added_by);
+            $notification->insertNotification($returned_id, $user_to, 'profile_post');
+        }
 
-            //update post count for user
+        //update post count for user
 
-            $num_posts = $this->user_obj->getNumPosts();
-            $num_posts++;
-            $update_query = mysqli_query($this->con, "UPDATE users SET num_posts = '$num_posts' WHERE username='$added_by'");
+        $num_posts = $this->user_obj->getNumPosts();
+        $num_posts++;
+        $update_query = mysqli_query($this->con, "UPDATE users SET num_posts = '$num_posts' WHERE username='$added_by'");
 
-            //These won't be calculated when searching for trending words
-            $stopWords = "a about above across after again against all almost alone along already
+        //These won't be calculated when searching for trending words
+        $stopWords = "a about above across after again against all almost alone along already
             also although always among am an and another any anybody anyone anything anywhere are 
             area areas around as ask asked asking asks at away b back backed backing backs be became
             because become becomes been before began behind being beings best better between big 
@@ -105,42 +100,40 @@ class Post
             youngest your yours z lol haha omg hey ill iframe wonder else like 
             hate sleepy reason for some little yes bye choose";
 
-            $stopWords = preg_split("/[\s,]+/", $stopWords);
+        $stopWords = preg_split("/[\s,]+/", $stopWords);
 
-            $no_punctuation = preg_replace("/[^a-zA-Z 0-9]+/","",$body);
+        $no_punctuation = preg_replace("/[^a-zA-Z 0-9]+/", "", $body);
 
-            if(strpos($no_punctuation, "height") === false && strpos($no_punctuation, "width") === false && strpos($no_punctuation, "http") === false){
+        if (strpos($no_punctuation, "height") === false && strpos($no_punctuation, "width") === false && strpos($no_punctuation, "http") === false) {
 
-                $no_punctuation = preg_split("/[\s,]+/",$no_punctuation);
+            $no_punctuation = preg_split("/[\s,]+/", $no_punctuation);
 
-                foreach($stopWords as $value){
-                    foreach($no_punctuation as $key => $value2) {
-                        //any stopword has been found in the post
-                        if(strtolower($value) == strtolower($value2)){
-                            $no_punctuation[$key] = "";
-                        }
+            foreach ($stopWords as $value) {
+                foreach ($no_punctuation as $key => $value2) {
+                    //any stopword has been found in the post
+                    if (strtolower($value) == strtolower($value2)) {
+                        $no_punctuation[$key] = "";
                     }
                 }
-
-                foreach($no_punctuation as $value){
-                    $this->calculateTrend(ucfirst($value));
-                }
-
             }
 
+            foreach ($no_punctuation as $value) {
+                $this->calculateTrend(ucfirst($value));
+            }
         }
     }
 
 
-    public function calculateTrend($term){
 
-        if($term !=''){
-            $query = mysqli_query($this->con,"SELECT * FROM trends WHERE title='$term'");
+    public function calculateTrend($term)
+    {
 
-            if(mysqli_num_rows($query) == 0){
+        if ($term != '') {
+            $query = mysqli_query($this->con, "SELECT * FROM trends WHERE title='$term'");
+
+            if (mysqli_num_rows($query) == 0) {
                 $insert_query = mysqli_query($this->con, "INSERT INTO trends(title,hits) VALUES('$term','1')");
-            }
-            else{
+            } else {
                 $insert_query = mysqli_query($this->con, "UPDATE trends SET hits=hits+1 WHERE title='$term'");
             }
         }
@@ -215,7 +208,7 @@ class Post
                     $profile_pic = $user_row['profile_pic'];
 
 
-                ?>
+?>
                     <script>
                         function toggle<?php echo $id; ?>() {
 
@@ -289,16 +282,15 @@ class Post
                     }
 
 
-                    if($imagePath != "") {
+                    if ($imagePath != "") {
                         $imageDiv = "<div class='postedImage'>
                             <img src='$imagePath'>
                         </div>";
-                    }
-                    else{
+                    } else {
                         $imageDiv = "";
                     }
 
-                    $str .= "<div class='status_post' onClick='javascript:toggle$id()'>
+                    $str .= "<div class='status_post'>
             <div class='post_profile_pic'>
             <img src='$profile_pic' width='50'>
             </div>
@@ -307,9 +299,9 @@ class Post
             $delete_button
             </div>
 
-            <div id='post_body'>$body<br></div>
-                    <br>$imageDiv<br><br>
-            <div class='newsfeedPostOptions'>
+            <a style='font-weight:initial; text-decoration:none' href='post.php?id=". $id ."'><div id='post_body'>$body<br></div>
+                    <br>$imageDiv<br><br></a>
+            <div class='newsfeedPostOptions' onClick='javascript:toggle$id()'>
             Comments($commets_check_num)&nbsp;&nbsp;&nbsp;
             <iframe class='postIframe' src='like.php?post_id=$id' scrolling='no'></iframe>
             </div>
@@ -382,6 +374,7 @@ class Post
                 $body = $row['body'];
                 $added_by = $row['added_by'];
                 $date_time = $row['date_added'];
+                $imagePath = $row['image_uploaded'];
 
 
                 $user_logged_obj = new User($this->con, $userLoggedIn);
@@ -484,8 +477,18 @@ class Post
                     }
                 }
 
+                if($imagePath != "") {
+                    $imageDiv = "<div class='postedImage'>
+                            <img src='$imagePath'>
+                             </div>";
+                }
+                 
+                else {
+                    $imageDiv = "";
+                }
 
-                $str .= "<div class='status_post' onClick='javascript:toggle$id()'>
+
+                $str .= "<div class='status_post'>
             <div class='post_profile_pic'>
             <img src='$profile_pic' width='50'>
             </div>
@@ -494,9 +497,9 @@ class Post
             $delete_button
             </div>
 
-            <div id='post_body'>$body<br></div>
-                    <br><br><br>
-            <div class='newsfeedPostOptions'>
+            <a style='font-weight:initial; text-decoration:none' href='post.php?id=". $id ."'><div id='post_body'>$body<br>$imageDiv</div>
+                    <br><br><br></a>
+            <div class='newsfeedPostOptions' onClick='javascript:toggle$id()'>
             Comments($commets_check_num)&nbsp;&nbsp;&nbsp;
             <iframe src='like.php?post_id=$id' scrolling='no'></iframe>
             </div>
@@ -547,8 +550,8 @@ class Post
     {
 
         $userLoggedIn = $this->user_obj->getUsername();
-        
-        $opened_query = mysqli_query($this->con,"UPDATE notifications SET opened='yes' WHERE user_to='$userLoggedIn' AND link LIKE '%=$post_id'");
+
+        $opened_query = mysqli_query($this->con, "UPDATE notifications SET opened='yes' WHERE user_to='$userLoggedIn' AND link LIKE '%=$post_id'");
 
 
         $str = ""; //string to return
@@ -562,6 +565,7 @@ class Post
             $body = $row['body'];
             $added_by = $row['added_by'];
             $date_time = $row['date_added'];
+            $imagePath = $row['image_uploaded'];
 
             //prepare user_to string so it can be included even if not posted to a user
             if ($row['user_to'] == 'none') {
@@ -666,6 +670,16 @@ class Post
                     }
                 }
 
+                if($imagePath != "") {
+                    $imageDiv = "<div class='postedImage'>
+                            <img src='$imagePath'>
+                             </div>";
+                }
+                 
+                else {
+                    $imageDiv = "";
+                }
+
                 $str .= "<div class='status_post' onClick='javascript:toggle$id()'>
             <div class='post_profile_pic'>
             <img src='$profile_pic' width='50'>
@@ -675,7 +689,7 @@ class Post
             $delete_button
             </div>
 
-            <div id='post_body'>$body<br></div>
+            <div id='post_body'>$body<br>$imageDiv</div>
                     <br><br><br>
             <div class='newsfeedPostOptions'>
             Comments($commets_check_num)&nbsp;&nbsp;&nbsp;
@@ -708,14 +722,12 @@ class Post
 
                     });
                 </script>
-            <?php
+<?php
             } else {
                 echo "<p>You cannot see this post, because you are not friends with this user.</p>";
                 return;
             }
-        }
-
-        else{
+        } else {
             echo "<p>No post found. If you clicked a link, it may be broken.</p>";
             return;
         }
@@ -723,8 +735,9 @@ class Post
         echo $str;
     }
 
-    public function getPostedImagesVR($user){
-        $query=mysqli_query($this->con, "SELECT added_by, date_added, image_uploaded FROM posts WHERE (added_by='$user' AND image_uploaded!='')");
+    public function getPostedImagesVR($user)
+    {
+        $query = mysqli_query($this->con, "SELECT added_by, date_added, image_uploaded FROM posts WHERE (added_by='$user' AND image_uploaded!='')");
         if (mysqli_num_rows($query) > 0) {
             $i = 10;
             while ($post_row = mysqli_fetch_array($query)) {
@@ -734,23 +747,22 @@ class Post
                 echo "<a-image position='$i 3 5' src='$im'></a-image>";
                 $i++;
             }
-        }
-        else{
+        } else {
             echo "empty";
         }
     }
 
-    public function getRandomPostedImagesVR($user){
-        $query=mysqli_query($this->con, "SELECT image_uploaded FROM posts WHERE (added_by='$user' AND image_uploaded!='') ORDER BY RAND() LIMIT 1");
+    public function getRandomPostedImagesVR($user)
+    {
+        $query = mysqli_query($this->con, "SELECT image_uploaded FROM posts WHERE (added_by='$user' AND image_uploaded!='') ORDER BY RAND() LIMIT 1");
         if (mysqli_num_rows($query) > 0) {
             while ($post_row = mysqli_fetch_array($query)) {
                 $im = $post_row['image_uploaded'];
                 echo "<a-image scale='0.35 0.35 0.35' rotation='-20 0 0' position='-1.195 0.91 -8.07' src='$im'></a-image>";
             }
-        }
-        else{
-            $user_obj2=new User($this->con, $user);
-            $im=$user_obj2->getProfilePic();
+        } else {
+            $user_obj2 = new User($this->con, $user);
+            $im = $user_obj2->getProfilePic();
             echo "<a-image scale='0.35 0.35 0.35' rotation='-20 0 0' position='-1.195 0.91 -8.07' src='$im'></a-image>";
         }
     }

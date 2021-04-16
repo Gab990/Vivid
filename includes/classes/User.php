@@ -70,7 +70,12 @@ class User {
 
         $friend_array_string = trim($friend_array_string, ","); //remove first and last comma
 
+        if($friend_array_string!=""){
         return explode(",", $friend_array_string); //split array at each comma
+        }
+        else{
+            return false;
+        }
     }
 
     public function didReceiveRequest($user_from){

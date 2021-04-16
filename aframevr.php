@@ -60,8 +60,6 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
     <!-- A-Frame speech recognition component - created by Leonardo Malave-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.5.0/annyang.min.js"></script>
     <script src="assets/js/aframe-speech-command-component.js"></script>
-    <script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
-
 
     <!--HTML embed component makes using HTML tags usable in A-Frame environment - created by Paul Brunt-->
     <script src="assets/js/htmlembed.js"></script>
@@ -84,6 +82,14 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
             });
         }
         loadAll();
+        function playMusic(){
+            let audio = new Audio(
+                        "assets/audio/bg.mp3"
+                    );
+                    audio.volume = 0.1;
+                    audio.play();
+        }
+        playMusic();
     </script>
 </head>
 
@@ -145,7 +151,7 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                         </a-entity>
                         <!-- Room - bigboy-->
                         <a-entity position="0 0 0" gltf-model="#bigboy">
-                            
+
                         </a-entity>
                         <!-- Room - record-->
                         <a-entity scale="0.01 0.01 0.01" position="0 0 0" gltf-model="#record">
@@ -166,7 +172,7 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                             <li><a href="#" class="button">Home</a></li>
                             <?php
                             if ($username == $userLoggedIn) {
-                            echo '<li><a href="#slide2" class="button">Messages</a></li>';
+                                echo '<li><a href="#slide2" class="button">Messages</a></li>';
                             }
                             ?>
                             <li><a href="#slide3" class="button">Profile</a></li>
@@ -270,29 +276,29 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                     </a-entity>
 
                     <a-entity id="friendsEntity" style="border-radius: 0; width:650px; height:fit-content; background: #FFAA00; background-position: center;" class="screen menu2" htmlembed="ppu:256" scale="0.46 0.46 0.46" visible="false" position="0 50 0" rotation="0 180 0">
-                            <h2>Friends</h2>
-                    <?php
-                            $user2_obj = new User($con, $userLoggedIn);
-                            foreach ($user2_obj->getFriendsList() as $friend2) {
-                                $friend2_obj = new User($con, $friend2);
-                                echo "<a href='aframevr.php?profile_username=$friend2' style='text-decoration:none;color:white;font-size:30px;'>
+                        <h2>Friends</h2>
+                        <?php
+                        $user2_obj = new User($con, $userLoggedIn);
+                        foreach ($user2_obj->getFriendsList() as $friend2) {
+                            $friend2_obj = new User($con, $friend2);
+                            echo "<a href='aframevr.php?profile_username=$friend2' style='text-decoration:none;color:white;font-size:30px;'>
                                 <img width='50px' height='50px' style='border:3px solid yellow;margin-right:35px;' src='" . $friend2_obj->getProfilePic() . "'><span id='profileLink' style='padding-left:15px;padding-right:15px; border-radius:10px'>"
-                                    . $friend2_obj->getFirstAndLastName() .
-                                    "</span></a><br>";
-                            }
-                            echo "<br><a style='background: red; color: white; text-decoration:none; padding:5px 10px;' href='javascript:void(0)' id='backButtonFriend'>Back</a>";
-                    ?>
+                                . $friend2_obj->getFirstAndLastName() .
+                                "</span></a><br>";
+                        }
+                        echo "<br><a style='background: red; color: white; text-decoration:none; padding:5px 10px;' href='javascript:void(0)' id='backButtonFriend'>Back</a>";
+                        ?>
                     </a-entity>
 
 
                     <!-- Go home button if guest -->
 
                     <?php
-                            if ($username !== $userLoggedIn) {
-                                echo '<a-entity id="goHomeButton" style="border-radius: 0; width:400px; background: #90EE90;" class="screen menu2" htmlembed="ppu:256" scale="0.46 0.46 0.46" position="0.95 0.9 1" rotation="0 180 0">
-                                <a href="aframevr.php?profile_username='.$userLoggedIn.'" style="text-decoration:none; color: white; margin:0; font-size: 50px;text-transform:uppercase">Home</a>
+                    if ($username !== $userLoggedIn) {
+                        echo '<a-entity id="goHomeButton" style="border-radius: 0; width:400px; background: #90EE90;" class="screen menu2" htmlembed="ppu:256" scale="0.46 0.46 0.46" position="0.95 0.9 1" rotation="0 180 0">
+                                <a href="aframevr.php?profile_username=' . $userLoggedIn . '" style="text-decoration:none; color: white; margin:0; font-size: 50px;text-transform:uppercase">Home</a>
                             </a-entity>';
-                            }?>
+                    } ?>
 
                     <!-- Show menu globe -->
                     <a-sphere material="color: #FFAA00;" radius="0.1" position="0 0.8 -8.1" event-set__showfriend="_target:#handmenu;
@@ -364,19 +370,21 @@ $user_vrroom_values = mysqli_fetch_array($user_vrroom_query);
                     let visitFriendButton = document.getElementById("visitFriendButton");
                     let leaveRoomButton = document.getElementById("leaveRoomButton");
 
-                    visitFriendButton.addEventListener("click",function(){
-                        friendsEntity.setAttribute("visible","true");
+                    visitFriendButton.addEventListener("click", function() {
+                        friendsEntity.setAttribute("visible", "true");
                         friendsEntity.setAttribute("position", "0.95 1 0.7");
                         visitFriendButton.setAttribute("visible", "false");
-                        leaveRoomButton.setAttribute("visible","false");
+                        leaveRoomButton.setAttribute("visible", "false");
                     });
 
-                    backButtonFriend.addEventListener("click",function(){
-                        friendsEntity.setAttribute("visible","false");
+                    backButtonFriend.addEventListener("click", function() {
+                        friendsEntity.setAttribute("visible", "false");
                         friendsEntity.setAttribute("position", "0 50 0");
                         visitFriendButton.setAttribute("visible", "true");
-                        leaveRoomButton.setAttribute("visible","true");
+                        leaveRoomButton.setAttribute("visible", "true");
                     });
+
+
                 </script>
             </div>
         </div>

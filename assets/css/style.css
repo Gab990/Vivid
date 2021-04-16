@@ -75,6 +75,17 @@ nav a {
     font-size: 17px;
 }
 
+#settings span, #requests .hover, #notif .hover, #inbox .hover, 
+#homePage span, #friends span, #myProfile span, #logout span { 
+ 
+    display: none; 
+    visibility: hidden;
+    height: 30px;
+    width: 0px;
+    white-space: nowrap;
+}
+
+
 ::-webkit-scrollbar {
     z-index: 12;
     width: 0.55rem;

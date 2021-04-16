@@ -2,6 +2,7 @@
 include("includes/header.php");
 
 
+
 if (isset($_POST['post'])) {
 
     $uploadOk = 1;
@@ -112,12 +113,10 @@ if (isset($_POST['post'])) {
         }
         ?>
     </div>
-</div>
-
-
-<div class="user_details column">
-    <h4>Current version 0.8 <br> Open-beta version</h4>
     <hr>
+    <div>
+    <h4>Current version 0.8 <br> Open-beta version</h4>
+    <br>
     <h4>Version details:</h4>
     <ul>
         <li>Social network features are working, users can send and receive messages</li>
@@ -138,6 +137,10 @@ if (isset($_POST['post'])) {
         <li>Most issues come from the new A-Frame and Three.js version. Will have to wait for the devs to update the components. Then the physics system and collision can be added</li>
     </ul>
 </div>
+</div>
+
+
+
 
 
 <script>
